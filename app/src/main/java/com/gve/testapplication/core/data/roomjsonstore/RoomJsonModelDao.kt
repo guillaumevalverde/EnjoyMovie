@@ -16,16 +16,16 @@ import android.arch.persistence.room.OnConflictStrategy.REPLACE
 @Dao
 interface RoomJsonModelDao {
 
-    @Query("select * from roomJsonTable where id = :arg0")
+    @Query("select * from roomJsonTable where id = :id")
     fun getItembyId(id: String): Flowable<RoomJson>
 
     @Insert(onConflict = REPLACE)
     fun add(json: RoomJson)
 
-    @Query("delete from roomJsonTable where id = :arg0")
+    @Query("delete from roomJsonTable where id = :key")
     fun delete(key: String)
 
-    @Query("select * from roomJsonTable where id = :arg0")
+    @Query("select * from roomJsonTable where id = :id")
     fun getItembyIdSingle(id: String): Single<RoomJson>
 
 }

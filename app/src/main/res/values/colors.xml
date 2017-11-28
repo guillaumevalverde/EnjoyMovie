@@ -3,6 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="green">#90ee90</color>
+    <color name="green_darker">#45a245</color>
 
     <!-- Grayscale -->
     <color name="gray_very_light">#EFEFEF</color>
@@ -11,5 +13,9 @@
 
     <!-- App wide usage colors -->
     <color name="background_card">@color/colorAccent</color>
+    <color name="background_card_fork_true">@color/gray_very_light</color>
+    <color name="background_card_fork_true_darker">@color/gray_dark</color>
+    <color name="background_card_fork_false">@color/green</color>
+    <color name="background_card_fork_false_darker">@color/green_darker</color>
 
 </resources>

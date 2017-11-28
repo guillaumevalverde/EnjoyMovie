@@ -10,6 +10,8 @@ import java.util.concurrent.Callable
 import javax.inject.Inject
 
 import io.reactivex.Flowable
+import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function
 
 /**
@@ -17,26 +19,32 @@ import io.reactivex.functions.Function
  */
 
 class RoomJsonStore<Value> @Inject
-constructor(private val appDataBase: AppDataBase,
-            private var getKey: Function<Value, String>,
+constructor(private val roomJsonModel: RoomJsonModelDao,
+            private var getKey: BiFunction<Value, Long, String>,
             private val getObjFromJson: Function<String, Value>,
             private val getJsonFromObj: Function<Value, String>,
             private val getEmptyValue: Callable<String>) : ReactiveStoreSingular<Value> {
 
     @Throws(Exception::class)
-    override fun storeSingular(model: Value) {
-        val roomJson = RoomJson(getKey.apply(model), time.call(), getJsonFromObj.apply(model))
-        appDataBase.roomJsonModel().add(roomJson)
+    override fun storeSingular(model: Value, key: Long) {
+        val roomJson = RoomJson(getKey.apply(model, key), time.call(), getJsonFromObj.apply(model))
+        roomJsonModel.add(roomJson)
     }
 
-    override fun getSingular(key: String): Flowable<Pair<Long, Value>> {
+    override fun getSingularStream(key: String): Flowable<Pair<Long, Value>> {
 
-        val first = appDataBase.roomJsonModel().getItembyIdSingle(key).toFlowable()
+        val first = roomJsonModel.getItembyIdSingle(key).toFlowable()
                 .onErrorReturn { _ -> RoomJson.getEmptyRoom(getEmptyValue) }
 
-        val second = appDataBase.roomJsonModel().getItembyId(key)
+        val second = roomJsonModel.getItembyId(key)
 
         return Flowable.concat(first, second)
+                .map { roomJson -> Pair(roomJson.timeStamp, getObjFromJson.apply(roomJson.json)) }
+    }
+
+    override fun getSingularSingle(key: String): Single<Pair<Long, Value>> {
+        return roomJsonModel.getItembyIdSingle(key)
+                .onErrorReturn { _ -> RoomJson.getEmptyRoom(getEmptyValue) }
                 .map { roomJson -> Pair(roomJson.timeStamp, getObjFromJson.apply(roomJson.json)) }
     }
 

@@ -1,30 +1,15 @@
 <resources>
-    <string name="app_name">Apium</string>
+    <string name="app_name">Xing</string>
 
-    <!-- User Login related -->
-    <string name="user_login_button">Log in</string>
-    <string name="user_login_hint">Type your name</string>
-    <string name="user_login_error_empty">please, type a username</string>
-    <string name="user_login_error_no_user">Username incorrect</string>
-    <string name="user_articles_news_feed">%1$s\'s news feed </string>
-    <string name="article_source_date">%1$s - %2$s</string>
+    <!--Repository related -->
+    <string name="repo_name">Repository: %1$s</string>
+    <string name="repo_ddescritpion">description: %1$s</string>
+    <string name="repo_owner_login">Owner: %1$s</string>
 
+    <!-- dialog -->
+    <string name="dialog_explanation_text">please, select to see in browser</string>
+    <string name="dialog_owner_page">owner page</string>
+    <string name="dialog_repo_page">repo page</string>
+    <string name="dialog_no_browser">Weird, you seems to have no browser to open this url, please download one.</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="user_login_image_content_descrip">image in login activity</string>
-    <string name="user_menu_log_out">Log out</string>
-
-    <!-- Song related -->
-    <string name="song_detail_name">title: %1$s</string>
-    <string name="song_detail_duration">duration: %1$s</string>
 </resources>

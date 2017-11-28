@@ -9,10 +9,8 @@ import android.support.v4.util.Pair;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.gve.testapplication.apium.albumdetail.data.MapperSong;
-import com.gve.testapplication.apium.albumdetail.data.Song;
-import com.gve.testapplication.apium.albumlist.data.Album;
-import com.gve.testapplication.apium.albumlist.data.AlbumRepo;
+import com.gve.testapplication.ListOfRepoFeature.data.ListRepositoryRepo;
+import com.gve.testapplication.ListOfRepoFeature.data.Repository;
 import com.gve.testapplication.core.data.AppDataBase;
 import com.gve.testapplication.core.data.roomjsonstore.RoomJson;
 import com.gve.testapplication.core.data.roomjsonstore.RoomJsonStore;
@@ -51,11 +49,9 @@ public class DataRoomTest {
     @Test
     public void insertSavesData() throws Exception {
         Context appContext = InstrumentationRegistry.getTargetContext();
-        List<Song> listSong = MapperSong.INSTANCE.getMapperRawToSongList()
-                .apply(SongDataTestUtils.getDataListRaw(gson))
-                .blockingGet();
+        List<Repository> list = PojoUtils.getList(gson).blockingGet();
 
-        RoomJson dataToBeSaved = new RoomJson("data1", 10000, gson.toJson(listSong));
+        RoomJson dataToBeSaved = new RoomJson("data1", 10000, gson.toJson(list));
 
         appDataBase.roomJsonModel().add(dataToBeSaved);
 
@@ -66,19 +62,19 @@ public class DataRoomTest {
 
     @Test
     public void getInitDataFromStoreIfDataBaseEmpty() throws Exception {
-        RoomJsonStore store =new RoomJsonStore<List<Album>>(
+        RoomJsonStore store = new RoomJsonStore<List<Repository>>(
                 appDataBase,
-                AlbumRepo.getKeyFunction(),
-                json -> gson.fromJson(json, new TypeToken<List<Album>>(){ }.getType()),
+                ListRepositoryRepo.getKeyFunction(),
+                json -> gson.fromJson(json, new TypeToken<List<Repository>>(){ }.getType()),
                 gson::toJson,
                 () -> "[]");
 
-        TestSubscriber<Pair<Long, List<Album>>> testSubscriber = store.getSingular("key").test();
+        TestSubscriber<Pair<Long, List<Repository>>> testSubscriber = store.getSingularStream("key").test();
 
         testSubscriber.assertNoErrors();
-        testSubscriber.assertValueAt(0, new Predicate<Pair<Long, List<Album>>>() {
+        testSubscriber.assertValueAt(0, new Predicate<Pair<Long, List<Repository>>>() {
             @Override
-            public boolean test(Pair<Long, List<Album>> pair) throws Exception {
+            public boolean test(Pair<Long, List<Repository>> pair) throws Exception {
                 return pair.second.isEmpty();
             }
         });

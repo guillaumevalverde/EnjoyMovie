@@ -86,9 +86,8 @@ public class RecyclerViewAdapter extends Adapter {
      * Only use for the first update of the adapter, whe it is still empty.
      */
     private void updateAllItems(@NonNull final List<DisplayableItem> items) {
-        Single.just(items)
-              .doOnSuccess(this::updateItemsInModel)
-              .subscribe(__ -> notifyDataSetChanged());
+        updateItemsInModel(items);
+        notifyDataSetChanged();
     }
 
     /**
@@ -97,9 +96,9 @@ public class RecyclerViewAdapter extends Adapter {
      */
     private void updateDiffItemsOnly(@NonNull final List<DisplayableItem> items) {
         // IMPROVEMENT: The diff calculation should happen in the background
-        Single.fromCallable(() -> calculateDiff(items))
-              .doOnSuccess(__ -> updateItemsInModel(items))
-              .subscribe(this::updateAdapterWithDiffResult);
+        DiffUtil.DiffResult result = calculateDiff(items);
+        updateItemsInModel(items);
+        updateAdapterWithDiffResult(result);
     }
 
     private DiffUtil.DiffResult calculateDiff(@NonNull final List<DisplayableItem> newItems) {
