@@ -4,15 +4,4 @@
     <!--Movie related -->
     <string name="movie_vote">vote: %1$s</string>
 
-    <!--Repository related -->
-    <string name="repo_name">Repository: %1$s</string>
-    <string name="repo_ddescritpion">description: %1$s</string>
-    <string name="repo_owner_login">Owner: %1$s</string>
-
-    <!-- dialog -->
-    <string name="dialog_explanation_text">please, select to see in browser</string>
-    <string name="dialog_owner_page">owner page</string>
-    <string name="dialog_repo_page">repo page</string>
-    <string name="dialog_no_browser">Weird, you seems to have no browser to open this url, please download one.</string>
-
 </resources>

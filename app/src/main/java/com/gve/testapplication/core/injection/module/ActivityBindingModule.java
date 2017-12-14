@@ -1,6 +1,5 @@
 package com.gve.testapplication.core.injection.module;
 
-import com.gve.testapplication.ListOfRepoFeature.presentation.injection.ListRepoActivityComponent;
 import com.gve.testapplication.core.injection.SubcomponentKey;
 import com.gve.testapplication.core.injection.SubcomponentBuilder;
 import com.gve.testapplication.feature.presentation.injection.ListMovieActivityComponent;
@@ -13,15 +12,9 @@ import dagger.multibindings.IntoMap;
  * Created by gve.
  */
 
-@Module(subcomponents = {
-        ListRepoActivityComponent.class, ListMovieActivityComponent.class
-})
+@Module(subcomponents = {ListMovieActivityComponent.class})
 
 public abstract class ActivityBindingModule {
-
-    @Binds @IntoMap
-    @SubcomponentKey(ListRepoActivityComponent.Builder.class)
-    public abstract SubcomponentBuilder listRepoActivity(ListRepoActivityComponent.Builder impl);
 
     @Binds @IntoMap
     @SubcomponentKey(ListMovieActivityComponent.Builder.class)

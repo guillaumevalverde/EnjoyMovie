@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.gve.testapplication.ListOfRepoFeature.domain.EndlessListRepoLogic;
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
 import com.gve.testapplication.feature.domain.EndlessListMovieLogic;
 

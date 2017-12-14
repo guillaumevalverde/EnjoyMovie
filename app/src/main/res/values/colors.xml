@@ -13,9 +13,5 @@
 
     <!-- App wide usage colors -->
     <color name="background_card">@color/colorAccent</color>
-    <color name="background_card_fork_true">@color/gray_very_light</color>
-    <color name="background_card_fork_true_darker">@color/gray_dark</color>
-    <color name="background_card_fork_false">@color/green</color>
-    <color name="background_card_fork_false_darker">@color/green_darker</color>
 
 </resources>

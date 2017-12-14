@@ -5,7 +5,5 @@ package com.gve.testapplication.core;
  */
 
 public class AppConstUtils {
-    public static final String GITHUB_API_URL = "https://api.github.com/";
-
     public static final String MOVIE_API_URL = "https://api.themoviedb.org/";
 }

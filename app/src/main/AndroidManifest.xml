@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ListOfRepoFeature.presentation.ListRepositoryActivity" >
-
-        </activity>
         <activity android:name=".feature.presentation.ListMovieActivity" >
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
