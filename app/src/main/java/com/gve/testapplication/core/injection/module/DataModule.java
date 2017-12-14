@@ -10,6 +10,8 @@ import com.gve.testapplication.core.data.AppDataBase;
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
 import com.gve.testapplication.core.data.roomjsonstore.RoomJsonStore;
 import com.gve.testapplication.core.injection.qualifiers.ForApplication;
+import com.gve.testapplication.feature.data.ListMovieRepo;
+import com.gve.testapplication.feature.presentation.Movie;
 
 import java.util.List;
 
@@ -36,6 +38,26 @@ public final class DataModule {
                 json -> gson.fromJson(json, new TypeToken<List<Repository>>() { }.getType()),
                 gson::toJson,
                 () -> "[]");
+    }
+
+
+    @Provides
+    @Singleton
+    ReactiveStoreSingular<List<Movie>> provideRoomMovieListRepoStore(
+            @ForApplication Context context,
+            Gson gson) {
+        return new RoomJsonStore<List<Movie>>(
+                AppDataBase.getDatabase(context).roomJsonModel(),
+                ListMovieRepo.getKeyFunction(),
+                json -> gson.fromJson(json, new TypeToken<List<Movie>>() { }.getType()),
+                gson::toJson,
+                () -> "[]");
+    }
+
+    @Provides
+    @Singleton
+    String provideKey() {
+        return "6cba655118ddc2832109cade1570a16e";
     }
 
 }

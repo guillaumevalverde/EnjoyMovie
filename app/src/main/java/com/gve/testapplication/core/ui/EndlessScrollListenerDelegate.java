@@ -1,8 +1,7 @@
-package com.gve.testapplication.ListOfRepoFeature.presentation;
+package com.gve.testapplication.core.ui;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import java.util.concurrent.Callable;
 

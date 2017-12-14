@@ -1,4 +1,4 @@
-package com.gve.testapplication.ListOfRepoFeature.presentation;
+package com.gve.testapplication.core.ui;
 
 import java.util.concurrent.Callable;
 

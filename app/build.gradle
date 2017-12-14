@@ -77,7 +77,9 @@ ext {
             leakCanary              : '1.5.1',
             autoValue               : '1.4.1',
             autoValueGson           : '0.5.0',
-            arch                    : '1.0.0']
+            arch                    : '1.0.0',
+            picasso                 : '2.5.2',
+            picassoTransform        : '2.1.2']
 }
 
 dependencies {
@@ -103,6 +105,10 @@ dependencies {
     // Networking
     implementation "com.squareup.okhttp3:okhttp:$dependencyVersions.okHttp"
     implementation "com.squareup.okhttp3:logging-interceptor:$dependencyVersions.okHttp"
+
+    // Picasso
+    implementation "com.squareup.picasso:picasso:$dependencyVersions.picasso"
+    implementation "jp.wasabeef:picasso-transformations:$dependencyVersions.picassoTransform"
 
     // Gson
     implementation "com.google.code.gson:gson:$dependencyVersions.gson"

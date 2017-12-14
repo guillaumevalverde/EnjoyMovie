@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.gve.testapplication.core.preconditions.AndroidPreconditions;
@@ -48,6 +49,10 @@ public class RecyclerViewAdapter extends Adapter {
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        if (factoryMap == null)
+            Log.v("gui", "fac null");
+
+            Log.v("gui", "ftyp" + viewType);
         return factoryMap.get(viewType).createViewHolder(parent);
     }
 

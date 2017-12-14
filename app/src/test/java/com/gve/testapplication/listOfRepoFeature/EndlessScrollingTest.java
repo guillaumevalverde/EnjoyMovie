@@ -1,6 +1,6 @@
 package com.gve.testapplication.listOfRepoFeature;
 
-import com.gve.testapplication.ListOfRepoFeature.presentation.EndlessScrollListener;
+import com.gve.testapplication.core.ui.EndlessScrollListener;
 import com.gve.testapplication.test_common.BaseTest;
 
 import org.junit.Test;
