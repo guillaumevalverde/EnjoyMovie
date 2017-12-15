@@ -10,10 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import io.reactivex.Single;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.gve.testapplication.core.injection.module.BootCampModule.API_KEY;
+
 
 /**
  * Created by gve on 29/11/2017.
@@ -29,7 +33,7 @@ public class ListMovieRepo {
     @Inject
     public ListMovieRepo(@NonNull MovieApiService fetcher,
                          @NonNull ReactiveStoreSingular<List<Movie>> reactiveStore,
-                         @NonNull String apiKey) {
+                         @NonNull @Named(API_KEY) String apiKey) {
         this.fetcher = fetcher;
         this.reactiveStore = reactiveStore;
         this.apiKey = apiKey;

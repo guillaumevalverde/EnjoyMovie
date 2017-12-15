@@ -1,0 +1,35 @@
+ext {
+    // Freesound API
+    movie_api_key = getMovieApiKey()
+}
+
+String getMovieApiKey() {
+    return getProperty("movie.api.key", "MOVIE.API.KEY")
+}
+
+String getProperty(String property, String envVariable) {
+    String value = fromFile(property);
+    if (value == null || value.isEmpty()) {
+        throw new IllegalStateException(
+                "Could not find property: " + property + " value in property file or environment")
+    }
+    return "\"$value\""
+}
+
+private String fromFile(String property) {
+    Properties apiProperties = loadFileProperties("$projectDir/api.properties")
+    return apiProperties.getProperty(property)
+}
+
+Properties loadFileProperties(String fileLocation) {
+    Properties properties = new Properties()
+    try {
+        properties.load(new FileInputStream(fileLocation))
+    } catch (FileNotFoundException fnf) {
+        logger.log(LogLevel.ERROR,
+                String.format("Missing API properties file: %s", fileLocation),
+                fnf)
+        throw fnf
+    }
+    return properties
+}

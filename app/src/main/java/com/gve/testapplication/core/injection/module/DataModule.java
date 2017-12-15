@@ -38,10 +38,4 @@ public final class DataModule {
                 () -> "[]");
     }
 
-    @Provides
-    @Singleton
-    String provideKey() {
-        return "6cba655118ddc2832109cade1570a16e";
-    }
-
 }

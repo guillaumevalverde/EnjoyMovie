@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'signing'
 apply plugin: 'kotlin-kapt'
+apply from: 'app-config.gradle'
+
+def STRING = "String"
 
 android {
     compileSdkVersion 26
@@ -14,11 +17,13 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        buildConfigField(STRING, "MOVIE_API_KEY", movie_api_key)
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+
     }
     signingConfigs {
         debug {
