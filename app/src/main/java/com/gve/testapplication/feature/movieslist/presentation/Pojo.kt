@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature.presentation
+package com.gve.testapplication.feature.movieslist.presentation
 
 /**
  * Created by gve on 14/12/2017.

@@ -2,7 +2,7 @@ package com.gve.testapplication.core.injection.module;
 
 import com.gve.testapplication.core.injection.SubcomponentKey;
 import com.gve.testapplication.core.injection.SubcomponentBuilder;
-import com.gve.testapplication.feature.presentation.injection.ListMovieActivityComponent;
+import com.gve.testapplication.feature.movieslist.presentation.injection.ListMovieActivityComponent;
 
 import dagger.Binds;
 import dagger.Module;

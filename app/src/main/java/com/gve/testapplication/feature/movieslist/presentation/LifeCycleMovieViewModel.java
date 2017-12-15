@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature.presentation;
+package com.gve.testapplication.feature.movieslist.presentation;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
-import com.gve.testapplication.feature.domain.EndlessListMovieLogic;
+import com.gve.testapplication.feature.movieslist.domain.EndlessListMovieLogic;
 
 import java.util.List;
 import java.util.concurrent.Callable;

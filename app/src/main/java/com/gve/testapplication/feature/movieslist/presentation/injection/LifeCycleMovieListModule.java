@@ -1,9 +1,9 @@
-package com.gve.testapplication.feature.presentation.injection;
+package com.gve.testapplication.feature.movieslist.presentation.injection;
 
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.gve.testapplication.core.utils.ViewModelUtil;
-import com.gve.testapplication.feature.presentation.LifeCycleMovieViewModel;
+import com.gve.testapplication.feature.movieslist.presentation.LifeCycleMovieViewModel;
 
 import javax.inject.Named;
 import javax.inject.Singleton;

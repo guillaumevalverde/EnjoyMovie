@@ -1,10 +1,10 @@
-package com.gve.testapplication.feature.presentation.recyclerview;
+package com.gve.testapplication.feature.movieslist.presentation.recyclerview;
 
 import android.support.annotation.NonNull;
 
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.recyclerview.RecyclerViewConstant;
-import com.gve.testapplication.feature.presentation.Movie;
+import com.gve.testapplication.feature.movieslist.presentation.Movie;
 
 import java.util.List;
 

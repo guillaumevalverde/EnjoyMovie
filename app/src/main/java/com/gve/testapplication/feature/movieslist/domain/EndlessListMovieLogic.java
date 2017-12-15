@@ -1,11 +1,11 @@
-package com.gve.testapplication.feature.domain;
+package com.gve.testapplication.feature.movieslist.domain;
 
 import android.support.annotation.NonNull;
 
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.recyclerview.RecyclerViewConstant;
-import com.gve.testapplication.feature.data.ListMovieRepo;
-import com.gve.testapplication.feature.presentation.recyclerview.MovieDisplayableMapper;
+import com.gve.testapplication.feature.movieslist.data.ListMovieRepo;
+import com.gve.testapplication.feature.movieslist.presentation.recyclerview.MovieDisplayableMapper;
 
 import java.util.ArrayList;
 import java.util.List;

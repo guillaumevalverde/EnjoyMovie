@@ -1,10 +1,10 @@
-package com.gve.testapplication.feature.data;
+package com.gve.testapplication.feature.movieslist.data;
 
 import android.support.annotation.NonNull;
 
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
-import com.gve.testapplication.feature.presentation.Movie;
-import com.gve.testapplication.feature.presentation.MoviesPage;
+import com.gve.testapplication.feature.movieslist.presentation.Movie;
+import com.gve.testapplication.feature.movieslist.presentation.MoviesPage;
 
 import java.util.ArrayList;
 import java.util.List;

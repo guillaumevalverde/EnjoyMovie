@@ -1,8 +1,8 @@
-package com.gve.testapplication.feature.data
+package com.gve.testapplication.feature.movieslist.data
 
 
-import com.gve.testapplication.feature.presentation.Movie
-import com.gve.testapplication.feature.presentation.MovieRaw
+import com.gve.testapplication.feature.movieslist.presentation.Movie
+import com.gve.testapplication.feature.movieslist.presentation.MovieRaw
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.Function

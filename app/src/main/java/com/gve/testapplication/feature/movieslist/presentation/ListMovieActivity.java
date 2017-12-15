@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature.presentation;
+package com.gve.testapplication.feature.movieslist.presentation;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,8 +16,8 @@ import com.gve.testapplication.core.BootCampApp;
 import com.gve.testapplication.core.injection.qualifiers.ForActivity;
 import com.gve.testapplication.core.recyclerview.RecyclerViewAdapter;
 import com.gve.testapplication.core.ui.EndlessScrollListenerDelegate;
-import com.gve.testapplication.feature.presentation.injection.ListMovieActivityComponent;
-import com.gve.testapplication.feature.presentation.injection.ListMovieActivityModule;
+import com.gve.testapplication.feature.movieslist.presentation.injection.ListMovieActivityComponent;
+import com.gve.testapplication.feature.movieslist.presentation.injection.ListMovieActivityModule;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -1,9 +1,6 @@
-package com.gve.testapplication.feature.data;
+package com.gve.testapplication.feature.movieslist.data;
 
-import com.gve.testapplication.feature.presentation.MovieRaw;
-import com.gve.testapplication.feature.presentation.MoviesPage;
-
-import java.util.List;
+import com.gve.testapplication.feature.movieslist.presentation.MoviesPage;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

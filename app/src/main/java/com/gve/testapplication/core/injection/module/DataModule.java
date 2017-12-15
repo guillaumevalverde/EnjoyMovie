@@ -8,8 +8,8 @@ import com.gve.testapplication.core.data.AppDataBase;
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
 import com.gve.testapplication.core.data.roomjsonstore.RoomJsonStore;
 import com.gve.testapplication.core.injection.qualifiers.ForApplication;
-import com.gve.testapplication.feature.data.ListMovieRepo;
-import com.gve.testapplication.feature.presentation.Movie;
+import com.gve.testapplication.feature.movieslist.data.ListMovieRepo;
+import com.gve.testapplication.feature.movieslist.presentation.Movie;
 
 import java.util.List;
 

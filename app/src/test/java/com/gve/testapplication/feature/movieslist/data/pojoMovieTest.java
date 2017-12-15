@@ -1,10 +1,10 @@
-package com.gve.testapplication.feature.data;
+package com.gve.testapplication.feature.movieslist.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.gve.testapplication.feature.presentation.Movie;
-import com.gve.testapplication.feature.presentation.MovieRaw;
-import com.gve.testapplication.feature.presentation.MoviesPage;
+import com.gve.testapplication.feature.movieslist.presentation.Movie;
+import com.gve.testapplication.feature.movieslist.presentation.MovieRaw;
+import com.gve.testapplication.feature.movieslist.presentation.MoviesPage;
 import com.gve.testapplication.test_common.BaseTest;
 
 import org.junit.Before;

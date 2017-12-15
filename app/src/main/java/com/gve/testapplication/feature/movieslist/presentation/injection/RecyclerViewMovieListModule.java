@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature.presentation.injection;
+package com.gve.testapplication.feature.movieslist.presentation.injection;
 
 import com.gve.testapplication.core.preconditions.AndroidPreconditions;
 import com.gve.testapplication.core.recyclerview.EmptyViewHolder;
@@ -6,8 +6,8 @@ import com.gve.testapplication.core.recyclerview.ItemComparator;
 import com.gve.testapplication.core.recyclerview.RecyclerViewAdapter;
 import com.gve.testapplication.core.recyclerview.ViewHolderBinder;
 import com.gve.testapplication.core.recyclerview.ViewHolderFactory;
-import com.gve.testapplication.feature.presentation.MovieItemComparator;
-import com.gve.testapplication.feature.presentation.recyclerview.MovieViewHolder;
+import com.gve.testapplication.feature.movieslist.presentation.MovieItemComparator;
+import com.gve.testapplication.feature.movieslist.presentation.recyclerview.MovieViewHolder;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature.presentation.injection;
+package com.gve.testapplication.feature.movieslist.presentation.injection;
 
 import android.content.Context;
 

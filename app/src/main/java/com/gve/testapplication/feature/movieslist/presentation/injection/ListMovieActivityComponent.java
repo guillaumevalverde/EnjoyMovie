@@ -1,7 +1,7 @@
-package com.gve.testapplication.feature.presentation.injection;
+package com.gve.testapplication.feature.movieslist.presentation.injection;
 import com.gve.testapplication.core.injection.SubcomponentBuilder;
 import com.gve.testapplication.core.injection.scopes.ActivityScope;
-import com.gve.testapplication.feature.presentation.ListMovieActivity;
+import com.gve.testapplication.feature.movieslist.presentation.ListMovieActivity;
 
 import dagger.Subcomponent;
 
