@@ -1,10 +1,11 @@
-package com.gve.testapplication.feature.movieslist.data;
+package com.gve.testapplication.feature.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.gve.testapplication.feature.movieslist.presentation.Movie;
-import com.gve.testapplication.feature.movieslist.presentation.MovieRaw;
-import com.gve.testapplication.feature.movieslist.presentation.MoviesPage;
+import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.MovieDetail;
+import com.gve.testapplication.feature.MovieRaw;
+import com.gve.testapplication.feature.MoviesPage;
 import com.gve.testapplication.test_common.BaseTest;
 
 import org.junit.Before;
@@ -40,6 +41,16 @@ public class pojoMovieTest extends BaseTest {
         assertFalse(movie.getAdult());
         assertEquals(244786, movie.getId());
         assertEquals(8.29, movie.getVote_average(), 0.001);
+        assertEquals(2059, movie.getVote_count());
+    }
+
+    @Test
+    public void parseMovieDetailJsonRaw() {
+        MovieDetail movie = MovieUtil.getMovieDetail(gson);
+
+        assertTrue(movie != null);
+        assertFalse(movie.getAdult());
+        assertEquals(550, movie.getId());
     }
 
     @Test

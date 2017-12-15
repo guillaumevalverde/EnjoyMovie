@@ -1,14 +1,63 @@
-package com.gve.testapplication.feature.movieslist.data;
+package com.gve.testapplication.feature.data;
 
 import com.google.gson.Gson;
-import com.gve.testapplication.feature.movieslist.presentation.MovieRaw;
-import com.gve.testapplication.feature.movieslist.presentation.MoviesPage;
+import com.gve.testapplication.feature.MovieDetail;
+import com.gve.testapplication.feature.MovieRaw;
+import com.gve.testapplication.feature.MoviesPage;
 
 /**
  * Created by gve on 14/12/2017.
  */
 
 public class MovieUtil {
+
+    public static String MOVIE_DETAIL_JSON = "{\n" +
+            "    \"adult\": false,\n" +
+            "    \"backdrop_path\": \"/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg\",\n" +
+            "    \"belongs_to_collection\": null,\n" +
+            "    \"budget\": 63000000,\n" +
+            "    \"genres\": [\n" +
+            "    {\n" +
+            "        \"id\": 18,\n" +
+            "        \"name\": \"Drama\"\n" +
+            "    }\n" +
+            "    ],\n" +
+            "    \"homepage\": \"\",\n" +
+            "    \"id\": 550,\n" +
+            "    \"imdb_id\": \"tt0137523\",\n" +
+            "    \"original_language\": \"en\",\n" +
+            "    \"original_title\": \"Fight Club\",\n" +
+            "    \"overview\": \"A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \\\"fight clubs\\\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.\",\n" +
+            "    \"popularity\": 0.5,\n" +
+            "    \"poster_path\": null,\n" +
+            "    \"production_companies\": [\n" +
+            "    {\n" +
+            "        \"name\": \"20th Century Fox\",\n" +
+            "        \"id\": 25\n" +
+            "    }\n" +
+            "    ],\n" +
+            "    \"production_countries\": [\n" +
+            "    {\n" +
+            "        \"iso_3166_1\": \"US\",\n" +
+            "        \"name\": \"United States of America\"\n" +
+            "    }\n" +
+            "    ],\n" +
+            "    \"release_date\": \"1999-10-12\",\n" +
+            "    \"revenue\": 100853753,\n" +
+            "    \"runtime\": 139,\n" +
+            "    \"spoken_languages\": [\n" +
+            "    {\n" +
+            "        \"iso_639_1\": \"en\",\n" +
+            "        \"name\": \"English\"\n" +
+            "    }\n" +
+            "    ],\n" +
+            "    \"status\": \"Released\",\n" +
+            "    \"tagline\": \"How much can you know about yourself if you've never been in a fight?\",\n" +
+            "    \"title\": \"Fight Club\",\n" +
+            "    \"video\": false,\n" +
+            "    \"vote_average\": 7.8,\n" +
+            "    \"vote_count\": 3439\n" +
+            "}";
 
     public static String MOVIE_1_JSON = "{\n" +
             "      \"poster_path\": \"/lIv1QinFqz4dlp5U4lQ6HaiskOZ.jpg\",\n" +
@@ -431,6 +480,10 @@ public class MovieUtil {
 
     public static MovieRaw getMovieRaw(Gson gson) {
         return gson.fromJson(MovieUtil.MOVIE_1_JSON, MovieRaw.class);
+    }
+
+    public static MovieDetail getMovieDetail(Gson gson) {
+        return gson.fromJson(MovieUtil.MOVIE_DETAIL_JSON, MovieDetail.class);
     }
 
     public static MoviesPage getMoviesInPage(Gson gson) {

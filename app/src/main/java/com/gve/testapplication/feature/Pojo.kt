@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature.movieslist.presentation
+package com.gve.testapplication.feature
 
 /**
  * Created by gve on 14/12/2017.
@@ -9,6 +9,18 @@ data class Movie(val id: Long,
                  val vote: Float,
                  val url: String)
 
+data class MovieDetail(val poster_path: String,
+                       val adult: Boolean,
+                       val backdrop_path: String,
+                       val budget: Long,
+                       val overview: String,
+                       val release_date: String,
+                       val id: Long,
+                       val original_title: String,
+                       val popularity: Float,
+                       val vote_count: Long,
+                       val video: Boolean,
+                       val vote_average: Float)
 
 data class MovieRaw(val poster_path: String,
                  val adult: Boolean,

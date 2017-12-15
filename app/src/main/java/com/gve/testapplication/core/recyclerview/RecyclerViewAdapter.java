@@ -49,10 +49,6 @@ public class RecyclerViewAdapter extends Adapter {
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        if (factoryMap == null)
-            Log.v("gui", "fac null");
-
-            Log.v("gui", "ftyp" + viewType);
         return factoryMap.get(viewType).createViewHolder(parent);
     }
 

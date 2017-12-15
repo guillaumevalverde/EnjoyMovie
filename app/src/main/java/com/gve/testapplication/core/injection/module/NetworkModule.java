@@ -7,7 +7,7 @@ import com.gve.testapplication.BuildConfig;
 import com.gve.testapplication.InstrumentationModule;
 import com.gve.testapplication.core.AppConstUtils;
 import com.gve.testapplication.core.injection.qualifiers.ForApplication;
-import com.gve.testapplication.feature.movieslist.data.MovieApiService;
+import com.gve.testapplication.feature.data.MovieApiService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.Picasso;
 

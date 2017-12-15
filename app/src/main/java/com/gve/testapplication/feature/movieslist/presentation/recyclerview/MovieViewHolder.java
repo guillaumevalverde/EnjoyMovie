@@ -1,6 +1,7 @@
 package com.gve.testapplication.feature.movieslist.presentation.recyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +15,8 @@ import com.gve.testapplication.core.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.recyclerview.ViewHolderBinder;
 import com.gve.testapplication.core.recyclerview.ViewHolderFactory;
 import com.gve.testapplication.core.utils.PicassoUtils;
-import com.gve.testapplication.feature.movieslist.presentation.Movie;
+import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.moviedetail.presentation.MovieDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -40,7 +42,13 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
                 .getString(R.string.movie_vote, movie.getVote()));
 
         PicassoUtils.showImageWithPicasso(picasso, movieIV, movie.getUrl());
-        //itemView.setOnLongClickListener(view -> showDialog(movie));
+        itemView.setOnClickListener(view -> startMovieDetailActivity(movie));
+    }
+
+    private void startMovieDetailActivity(Movie movie) {
+        Intent intent = new Intent(itemView.getContext(), MovieDetailActivity.class);
+        MovieDetailActivity.setMovieFromIntent(intent, movie);
+        itemView.getContext().startActivity(intent);
     }
 
     public static class MovieCardHolderFactory extends ViewHolderFactory {
