@@ -26,8 +26,8 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/movie_detail_frame"
+    <com.gve.testapplication.feature.moviedetail.presentation.InfiniteViewPager
+        android:id="@+id/movie_detail_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

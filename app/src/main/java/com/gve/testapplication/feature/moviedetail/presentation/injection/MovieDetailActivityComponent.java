@@ -1,6 +1,5 @@
 package com.gve.testapplication.feature.moviedetail.presentation.injection;
 import com.gve.testapplication.core.injection.SubcomponentBuilder;
-import com.gve.testapplication.core.injection.module.FragmentBindingModule;
 import com.gve.testapplication.core.injection.scopes.ActivityScope;
 import com.gve.testapplication.feature.moviedetail.presentation.MovieDetailActivity;
 
@@ -15,7 +14,7 @@ import dagger.Subcomponent;
  */
 
 @ActivityScope
-@Subcomponent(modules = {FragmentBindingModule.class, MovieDetailActivityModule.class})
+@Subcomponent(modules = {MovieDetailActivityModule.class})
 
 public interface MovieDetailActivityComponent {
 

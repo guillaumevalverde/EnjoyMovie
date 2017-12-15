@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
@@ -12,8 +13,15 @@ import com.gve.testapplication.R;
 import com.gve.testapplication.core.BootCampApp;
 import com.gve.testapplication.core.injection.activity.BaseInjectingActivity;
 import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.MovieDetailPagerViewModel;
+import com.gve.testapplication.feature.data.MovieDetailRepo;
 import com.gve.testapplication.feature.moviedetail.presentation.injection.MovieDetailActivityComponent;
 import com.gve.testapplication.feature.moviedetail.presentation.injection.MovieDetailActivityModule;
+import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
+
+import io.reactivex.disposables.CompositeDisposable;
 
 
 /**
@@ -27,7 +35,15 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
     public static final String URL = "url";
     public static final String VOTE = "vote";
 
-    private Movie movieRef;
+    @Inject
+    MovieDetailPagerViewModel.FactoryPagerViewModel factoryPagerViewModel;
+    @Inject
+    MovieDetailRepo repo;
+    @Inject
+    Picasso picasso;
+    private InfiniteViewPager pager;
+
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     public static Movie getMovieFromIntent(Intent intent) {
         return new Movie(intent.getLongExtra(ID, -1),
@@ -47,7 +63,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        movieRef = getMovieFromIntent(getIntent());
+        Movie movieRef = getMovieFromIntent(getIntent());
         Log.v(TAG, "Movie detail: " + movieRef.toString());
         Toolbar toolbar = findViewById(R.id.movie_detail_toolbar);
         setSupportActionBar(toolbar);
@@ -55,12 +71,22 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
 
         TextView titleToolBar = toolbar.findViewById(R.id.movie_detail_toolbar_title);
         titleToolBar.setText(this.getResources().getString(R.string.app_name));
-        showMovieDetailListFragment(movieRef);
+        pager = findViewById(R.id.movie_detail_pager);
+
+        InfiniteViewPagerAdapter pagerAdapter =
+                new InfiniteViewPagerAdapter(getBaseContext(), movieRef, repo, picasso);
+        disposable.add(factoryPagerViewModel.getViewModel(movieRef).getMovie().subscribe(
+                movies -> {
+                    pagerAdapter.addRessource(movies);
+                    pager.setCurrentItem(0);
+                }, error -> Log.e(TAG, "error: " + error.getMessage())));
+
+        pager.setAdapter(pagerAdapter);
     }
 
     @Override
-    protected void onInject(@NonNull MovieDetailActivityComponent musicActivityComponent) {
-        musicActivityComponent.inject(this);
+    protected void onInject(@NonNull MovieDetailActivityComponent movieDetailActivityComponent) {
+        movieDetailActivityComponent.inject(this);
     }
 
     @NonNull
@@ -77,20 +103,6 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
     @Override
     protected int getLayoutId() {
         return R.layout.activity_movie_detail;
-    }
-
-    private void showMovieDetailListFragment(Movie movie) {
-        Log.v(TAG, "showSongListFragment: " + movie.getId());
-        MovieDetailFragment fragment = MovieDetailFragment.newInstance(movie);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(R.id.movie_detail_frame, fragment)
-                .commit();
-    }
-
-    public void onClick(Movie movie, int position) {
-        //TODO
     }
 
 }

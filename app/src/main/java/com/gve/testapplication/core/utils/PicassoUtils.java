@@ -24,6 +24,7 @@ public class PicassoUtils {
     public static void showImageWithPicasso(Picasso picasso, ImageView imageIV, String url) {
         if (!url.isEmpty()) {
             picasso.load(url)
+                    .transform(TRANSFORMATION)
                     .placeholder(R.drawable.rounded)
                     .fit()
                     .centerCrop()
