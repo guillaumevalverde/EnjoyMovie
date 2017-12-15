@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.gve.testapplication.R;
 import com.gve.testapplication.core.BootCampApp;
+import com.gve.testapplication.core.injection.activity.BaseInjectingActivity;
 import com.gve.testapplication.core.injection.qualifiers.ForActivity;
 import com.gve.testapplication.core.recyclerview.RecyclerViewAdapter;
 import com.gve.testapplication.core.ui.EndlessScrollListenerDelegate;
@@ -28,7 +29,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by gve on 31/10/2017.
  */
 
-public class ListMovieActivity extends AppCompatActivity {
+public class ListMovieActivity extends BaseInjectingActivity<ListMovieActivityComponent> {
     public static final String TAG = ListMovieActivity.class.getSimpleName();
 
     @Inject
@@ -46,13 +47,6 @@ public class ListMovieActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ListMovieActivityComponent.Builder builder = (ListMovieActivityComponent.Builder)
-                (((BootCampApp) getApplication()).getComponent())
-                        .subComponentBuilders()
-                        .get(ListMovieActivityComponent.Builder.class)
-                        .get();
-        builder.activityModule(new ListMovieActivityModule(this)).build().inject(this);
-
         super.onCreate(savedInstanceState);
 
         final LifeCycleMovieViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(LifeCycleMovieViewModel.class);
@@ -81,6 +75,27 @@ public class ListMovieActivity extends AppCompatActivity {
 
 
         viewModel.getRepositoryListLiveData().observe(this, adapter::update);
+    }
+
+    @Override
+    protected void onInject(@NonNull ListMovieActivityComponent listMovieActivityComponent) {
+        listMovieActivityComponent.inject(this);
+    }
+
+    @NonNull
+    @Override
+    protected ListMovieActivityComponent createComponent() {
+        ListMovieActivityComponent.Builder builder = (ListMovieActivityComponent.Builder)
+                (((BootCampApp) getApplication()).getComponent())
+                        .subComponentBuilders()
+                        .get(ListMovieActivityComponent.Builder.class)
+                        .get();
+        return builder.activityModule(new ListMovieActivityModule(this)).build();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.repository_list;
     }
 
     @Override
