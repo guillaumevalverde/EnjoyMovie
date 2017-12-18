@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="green">#90ee90</color>
-    <color name="green_darker">#45a245</color>
+    <color name="colorPrimary">#333333</color>
+    <color name="colorPrimaryDark">#0d0d0d</color>
+    <color name="colorAccent">#ff9900</color>
+    <color name="colorLightAccent">#ffc266</color>
 
     <!-- Grayscale -->
     <color name="gray_very_light">#EFEFEF</color>
@@ -13,5 +12,7 @@
 
     <!-- App wide usage colors -->
     <color name="background_card">@color/colorAccent</color>
+    <color name="text_main" >@android:color/white</color>
+    <color name="text_info" >@color/gray_light</color>
 
 </resources>

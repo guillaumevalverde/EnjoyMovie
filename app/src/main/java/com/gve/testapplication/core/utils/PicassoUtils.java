@@ -27,7 +27,7 @@ public class PicassoUtils {
                     .transform(TRANSFORMATION)
                     .placeholder(R.drawable.rounded)
                     .fit()
-                    .centerCrop()
+                    .centerInside()
                     .error(R.drawable.rounded)
                     .into(imageIV);
         } else {

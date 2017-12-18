@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -53,14 +54,14 @@ public class ListMovieActivity extends BaseInjectingActivity<ListMovieActivityCo
 
         setContentView(R.layout.repository_list);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        TextView titleToolBar = toolbar.findViewById(R.id.toolbar_title);
-        titleToolBar.setText(context.getResources().getString(R.string.app_name));
+        getSupportActionBar().setTitle(context.getResources().getString(R.string.app_name));
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(),
+                        DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
 
         EndlessScrollListenerDelegate listener =
                 new EndlessScrollListenerDelegate(viewModel.callableFetch());

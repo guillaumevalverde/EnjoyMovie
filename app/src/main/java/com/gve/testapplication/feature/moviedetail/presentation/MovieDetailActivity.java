@@ -65,12 +65,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
 
         Movie movieRef = getMovieFromIntent(getIntent());
         Log.v(TAG, "Movie detail: " + movieRef.toString());
-        Toolbar toolbar = findViewById(R.id.movie_detail_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        TextView titleToolBar = toolbar.findViewById(R.id.movie_detail_toolbar_title);
-        titleToolBar.setText(this.getResources().getString(R.string.app_name));
+        getSupportActionBar().setTitle(this.getResources().getString(R.string.app_name));
         pager = findViewById(R.id.movie_detail_pager);
 
         InfiniteViewPagerAdapter pagerAdapter =

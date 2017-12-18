@@ -62,7 +62,7 @@ public class CustomMovieDetailView extends RelativeLayout {
 
 
     private void init(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_movie_detail,
+        View view = LayoutInflater.from(context).inflate(R.layout.movie_detail,
                 this, true);
         LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
