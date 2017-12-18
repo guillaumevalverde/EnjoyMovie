@@ -1,4 +1,4 @@
-package com.gve.testapplication.core.recyclerview;
+package com.gve.testapplication.core.presentation.recyclerview;
 
 /**
  * Created by gve on 31/10/2017.

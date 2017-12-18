@@ -36,4 +36,5 @@ public class ListMovieActivityModule {
     public Activity getActivity() {
         return activity;
     }
+
 }

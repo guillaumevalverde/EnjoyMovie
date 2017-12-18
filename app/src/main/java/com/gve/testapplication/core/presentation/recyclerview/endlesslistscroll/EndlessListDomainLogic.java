@@ -1,11 +1,9 @@
-package com.gve.testapplication.feature.movieslist.domain;
+package com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll;
 
 import android.support.annotation.NonNull;
 
-import com.gve.testapplication.core.recyclerview.DisplayableItem;
-import com.gve.testapplication.core.recyclerview.RecyclerViewConstant;
-import com.gve.testapplication.feature.data.ListMovieRepo;
-import com.gve.testapplication.feature.movieslist.presentation.recyclerview.MovieDisplayableMapper;
+import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
+import com.gve.testapplication.core.presentation.recyclerview.RecyclerViewConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,27 +14,28 @@ import javax.inject.Inject;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Function;
 import io.reactivex.subjects.BehaviorSubject;
 
-import static com.gve.testapplication.core.recyclerview.DisplayableItem.toDisplayableItem;
+import static com.gve.testapplication.core.presentation.recyclerview.DisplayableItem.toDisplayableItem;
 
 /**
  * Created by gve on 28/11/2017.
  */
 
-public class EndlessListMovieLogic {
+public class EndlessListDomainLogic<T> {
 
     private CompositeDisposable disposable = new CompositeDisposable();
-    private MovieDisplayableMapper mapper;
-    private ListMovieRepo repo;
+    private Function<List<T>, List<DisplayableItem>> mapper;
+    private RepoInfiniteScrolling<T> repo;
     private BehaviorSubject<List<DisplayableItem>> listBehaviorSubject =
             BehaviorSubject.createDefault(new ArrayList<DisplayableItem>());
 
     private int numPage = 1;
 
     @Inject
-    public EndlessListMovieLogic(@NonNull MovieDisplayableMapper mapper,
-                                 @NonNull ListMovieRepo repo) {
+    public EndlessListDomainLogic(@NonNull Function<List<T>, List<DisplayableItem>> mapper,
+                                  @NonNull RepoInfiniteScrolling<T> repo) {
 
         this.mapper = mapper;
         this.repo = repo;
@@ -62,7 +61,7 @@ public class EndlessListMovieLogic {
                         removeLastItemIfEmptyType(listBehaviorSubject.getValue()))));
     }
 
-    public Callable callableFetch() {
+   public Callable getCallableFetch() {
         return () -> {
             fetch();
             return "fetched";

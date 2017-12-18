@@ -1,10 +1,9 @@
-package com.gve.testapplication.core.recyclerview;
+package com.gve.testapplication.core.presentation.recyclerview;
 
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import com.gve.testapplication.core.preconditions.AndroidPreconditions;
@@ -12,8 +11,6 @@ import com.gve.testapplication.core.preconditions.AndroidPreconditions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import io.reactivex.Single;
 
 /**
  * Implementation of {@link Adapter} for {@link DisplayableItem}.

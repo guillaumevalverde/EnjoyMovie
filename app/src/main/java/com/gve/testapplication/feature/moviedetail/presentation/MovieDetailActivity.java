@@ -16,9 +16,10 @@ import android.widget.TextView;
 import com.gve.testapplication.R;
 import com.gve.testapplication.core.BootCampApp;
 import com.gve.testapplication.core.injection.activity.BaseInjectingActivity;
+import com.gve.testapplication.core.presentation.InfiniteViewPager;
 import com.gve.testapplication.core.utils.PicassoUtils;
 import com.gve.testapplication.feature.Movie;
-import com.gve.testapplication.feature.data.MovieDetailPagerViewModel;
+import com.gve.testapplication.feature.data.MovieDetailPagerRepo;
 import com.gve.testapplication.feature.data.MovieDetailRepo;
 import com.gve.testapplication.feature.moviedetail.presentation.injection.MovieDetailActivityComponent;
 import com.gve.testapplication.feature.moviedetail.presentation.injection.MovieDetailActivityModule;
@@ -46,7 +47,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
     public static final String VOTE = "vote";
 
     @Inject
-    MovieDetailPagerViewModel.FactoryPagerViewModel factoryPagerViewModel;
+    MovieDetailPagerRepo.FactoryMovieDetailPagerRepo factoryPagerViewModel;
 
     @Inject
     MovieDetailRepo repo;

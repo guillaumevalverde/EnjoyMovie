@@ -1,4 +1,4 @@
-package com.gve.testapplication.core.ui;
+package com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll;
 
 import java.util.concurrent.Callable;
 

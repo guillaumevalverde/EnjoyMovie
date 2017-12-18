@@ -1,11 +1,11 @@
 package com.gve.testapplication.feature.movieslist.presentation.injection;
 
 import com.gve.testapplication.core.preconditions.AndroidPreconditions;
-import com.gve.testapplication.core.recyclerview.EmptyViewHolder;
-import com.gve.testapplication.core.recyclerview.ItemComparator;
-import com.gve.testapplication.core.recyclerview.RecyclerViewAdapter;
-import com.gve.testapplication.core.recyclerview.ViewHolderBinder;
-import com.gve.testapplication.core.recyclerview.ViewHolderFactory;
+import com.gve.testapplication.core.presentation.recyclerview.EmptyViewHolder;
+import com.gve.testapplication.core.presentation.recyclerview.ItemComparator;
+import com.gve.testapplication.core.presentation.recyclerview.RecyclerViewAdapter;
+import com.gve.testapplication.core.presentation.recyclerview.ViewHolderBinder;
+import com.gve.testapplication.core.presentation.recyclerview.ViewHolderFactory;
 import com.gve.testapplication.feature.movieslist.presentation.recyclerview.MovieItemComparator;
 import com.gve.testapplication.feature.movieslist.presentation.recyclerview.MovieViewHolder;
 
@@ -17,8 +17,8 @@ import dagger.Provides;
 import dagger.multibindings.IntKey;
 import dagger.multibindings.IntoMap;
 
-import static com.gve.testapplication.core.recyclerview.RecyclerViewConstant.EMPTY_TYPE;
-import static com.gve.testapplication.core.recyclerview.RecyclerViewConstant.MOVIE_CARD_TYPE;
+import static com.gve.testapplication.core.presentation.recyclerview.RecyclerViewConstant.EMPTY_TYPE;
+import static com.gve.testapplication.core.presentation.recyclerview.RecyclerViewConstant.MOVIE_CARD_TYPE;
 
 /**
  * Created by gve on 26/10/2017.

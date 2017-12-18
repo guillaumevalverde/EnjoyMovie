@@ -1,9 +1,14 @@
 package com.gve.testapplication.feature.data;
 
 import com.google.gson.Gson;
+import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.MovieDetail;
 import com.gve.testapplication.feature.MovieRaw;
 import com.gve.testapplication.feature.MoviesPage;
+
+import java.util.List;
+
+import io.reactivex.Single;
 
 /**
  * Created by gve on 14/12/2017.
@@ -488,5 +493,11 @@ public class MovieUtil {
 
     public static MoviesPage getMoviesInPage(Gson gson) {
         return gson.fromJson(MovieUtil.RAW_JSON_PAGE, MoviesPage.class);
+    }
+
+    public static Single<List<Movie>> getMoviesSingle(Gson gson) throws Exception {
+        MoviesPage moviesPage = getMoviesInPage(gson);
+        return Single.just(moviesPage.getResults())
+        .flatMap(MapperMovie.mapperListMovieRawToMovie());
     }
 }

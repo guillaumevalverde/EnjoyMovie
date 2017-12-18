@@ -9,20 +9,19 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 import com.gve.testapplication.R;
 import com.gve.testapplication.core.BootCampApp;
 import com.gve.testapplication.core.injection.activity.BaseInjectingActivity;
 import com.gve.testapplication.core.injection.qualifiers.ForActivity;
-import com.gve.testapplication.core.recyclerview.RecyclerViewAdapter;
-import com.gve.testapplication.core.ui.EndlessScrollListenerDelegate;
+import com.gve.testapplication.core.presentation.recyclerview.RecyclerViewAdapter;
+import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.EndlessListDomainLogic;
+import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.EndlessScrollListenerDelegate;
+import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.movieslist.presentation.injection.ListMovieActivityComponent;
 import com.gve.testapplication.feature.movieslist.presentation.injection.ListMovieActivityModule;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -37,12 +36,14 @@ public class ListMovieActivity extends BaseInjectingActivity<ListMovieActivityCo
     RecyclerViewAdapter adapter;
 
     @Inject
-    @Named("movie")
     ViewModelProvider.Factory viewModelFactory;
 
     @Inject
     @ForActivity
     Context context;
+
+    @Inject
+    EndlessListDomainLogic<Movie> endlessListMovieLogic;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -50,7 +51,8 @@ public class ListMovieActivity extends BaseInjectingActivity<ListMovieActivityCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final LifeCycleMovieViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(LifeCycleMovieViewModel.class);
+        final LifeCycleMovieViewModel viewModel = ViewModelProviders.of(this,
+                viewModelFactory).get(LifeCycleMovieViewModel.class);
 
         setContentView(R.layout.repository_list);
 
@@ -64,7 +66,7 @@ public class ListMovieActivity extends BaseInjectingActivity<ListMovieActivityCo
 
 
         EndlessScrollListenerDelegate listener =
-                new EndlessScrollListenerDelegate(viewModel.callableFetch());
+                new EndlessScrollListenerDelegate(viewModel.getCallableFetch());
 
         recyclerView.addOnScrollListener(listener);
         RecyclerView.LayoutManager mLayoutManager

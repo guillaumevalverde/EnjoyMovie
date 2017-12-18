@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature.moviedetail.presentation;
+package com.gve.testapplication.core.presentation;
 
 /**
  * Created by gve on 16/12/2017.
@@ -10,9 +10,11 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.gve.testapplication.feature.moviedetail.presentation.InfiniteViewPagerAdapter;
+
 /**
  * A {@link ViewPager} that allows pseudo-infinite paging with a wrap-around effect. Should be used with an {@link
- * InfiniteFragmentPagerAdapter}.
+ * InfiniteViewPagerAdapter}.
  */
 public class InfiniteViewPager extends ViewPager {
 
@@ -35,7 +37,6 @@ public class InfiniteViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
-        Log.d(TAG, "ViewPager: setCurrentItem: " + item);
         if (getAdapter().getCount() == 0) {
             super.setCurrentItem(item, smoothScroll);
             return;
@@ -46,7 +47,6 @@ public class InfiniteViewPager extends ViewPager {
 
     @Override
     public int getCurrentItem() {
-        Log.d(TAG, "ViewPager: gCurrentItem");
         if (getAdapter().getCount() == 0) {
             return super.getCurrentItem();
         }
@@ -62,29 +62,23 @@ public class InfiniteViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item) {
-        Log.d(TAG, "ViewPager: setCurrentItem: " + item);
+        Log.d(TAG, "setCurrentItem: " + item);
         // offset the current item to ensure there is space to scroll
         setCurrentItem(item, false);
     }
 
     private int getOffsetAmount() {
-        Log.d(TAG, "ViewPager: getOffsetAmount");
         if (getAdapter().getCount() == 0) {
-            Log.d(TAG, "ViewPager: 1");
-
             return 0;
         }
         if (getAdapter() instanceof InfiniteViewPagerAdapter) {
-            Log.d(TAG, "ViewPager: 2");
             InfiniteViewPagerAdapter infAdapter = (InfiniteViewPagerAdapter) getAdapter();
             // allow for 100 back cycles from the beginning
             // should be enough to create an illusion of infinity
             // warning: scrolling to very high values (1,000,000+) results in
             // strange drawing behaviour
-            Log.d(TAG, "return 0 offset" + infAdapter.getRealCount());
             return infAdapter.getRealCount() * 100;
         } else {
-            Log.d(TAG, "ViewPager: 3");
             return 0;
         }
     }

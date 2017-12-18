@@ -1,4 +1,4 @@
-package com.gve.testapplication.core.ui;
+package com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +11,6 @@ import java.util.concurrent.Callable;
 
 public class EndlessScrollListenerDelegate extends RecyclerView.OnScrollListener {
 
-
-    private Callable fetch;
     private EndlessScrollListener endlessScrollListener;
 
     public EndlessScrollListenerDelegate(Callable fetch) {

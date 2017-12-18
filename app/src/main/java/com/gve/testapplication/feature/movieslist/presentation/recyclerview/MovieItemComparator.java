@@ -1,7 +1,7 @@
 package com.gve.testapplication.feature.movieslist.presentation.recyclerview;
 
-import com.gve.testapplication.core.recyclerview.DisplayableItem;
-import com.gve.testapplication.core.recyclerview.ItemComparator;
+import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
+import com.gve.testapplication.core.presentation.recyclerview.ItemComparator;
 
 /**
  * Created by gve on 27/10/2017.

@@ -6,8 +6,8 @@ import com.gve.testapplication.core.BootCampApp;
 import com.gve.testapplication.core.injection.module.ActivityBindingModule;
 import com.gve.testapplication.core.injection.module.BootCampModule;
 import com.gve.testapplication.core.injection.module.NetworkModule;
-import com.gve.testapplication.core.injection.module.ViewModelModule;
 import com.gve.testapplication.core.injection.module.DataModule;
+import com.gve.testapplication.core.injection.module.ViewModelModule;
 
 import java.util.Map;
 

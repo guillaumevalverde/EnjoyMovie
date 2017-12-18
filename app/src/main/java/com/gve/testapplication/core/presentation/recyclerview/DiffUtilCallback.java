@@ -1,4 +1,4 @@
-package com.gve.testapplication.core.recyclerview;
+package com.gve.testapplication.core.presentation.recyclerview;
 
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;

@@ -64,9 +64,7 @@ public class InfiniteViewPagerAdapter extends PagerAdapter {
             return createView(container, virtualPosition);
         }
 
-
-        Log.v(TAG, "instantiateItem container size: " + container.getChildCount());
-
+        Log.d(TAG, "instantiateItem container size: " + container.getChildCount());
         return createView(container, virtualPosition);
     }
 
@@ -84,7 +82,6 @@ public class InfiniteViewPagerAdapter extends PagerAdapter {
         }
     }
 
-
     public void addRessource(List<Movie> resources) {
         addRessourceWithouNotify(resources);
         this.notifyDataSetChanged();
@@ -99,23 +96,13 @@ public class InfiniteViewPagerAdapter extends PagerAdapter {
     }
     @Override
     public boolean isViewFromObject(View view, Object object) {
-     //   Log.d(TAG, "isViewFromObject : " + (view == ((RelativeLayout) object)));
-
         return view == ((RelativeLayout) object);
     }
 
-
     private View createView(ViewGroup container, int position) {
         Log.d(TAG, "createView : " + position + ", movie: " + resources.get(position).toString());
-
-        //View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
-        //ImageView imageView = itemView.findViewById(R.id.imageView);
-        //imageView.setBackgroundColor(itemView.getResources().getColor(resources.get(position)));
         CustomMovieDetailView view = new CustomMovieDetailView(mContext, picasso, resources.get(position), repo);
-
         container.addView(view);
         return view;
     }
-
-
 }

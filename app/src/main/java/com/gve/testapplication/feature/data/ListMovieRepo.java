@@ -3,6 +3,7 @@ package com.gve.testapplication.feature.data;
 import android.support.annotation.NonNull;
 
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
+import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.RepoInfiniteScrolling;
 import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.MoviesPage;
 
@@ -23,7 +24,7 @@ import static com.gve.testapplication.core.injection.module.BootCampModule.API_K
  * Created by gve on 29/11/2017.
  */
 
-public class ListMovieRepo {
+public class ListMovieRepo implements RepoInfiniteScrolling<Movie> {
     private static final String REPO_MOVIE = "movie";
     private MovieApiService fetcher;
     private ReactiveStoreSingular<List<Movie>> reactiveStore;
@@ -50,7 +51,7 @@ public class ListMovieRepo {
     private Single<List<Movie>> fetch(long id) {
         return fetcher.getWithPaging(apiKey, (int) id)
                 .map(MoviesPage::getResults)
-                .flatMap(MapperMovieRawToMovie.INSTANCE.getMapperListMovieRawToMovie())
+                .flatMap(MapperMovie.mapperListMovieRawToMovie())
                 .doOnSuccess(list -> reactiveStore.storeSingular(list, id));
     }
 

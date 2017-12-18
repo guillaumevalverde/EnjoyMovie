@@ -3,11 +3,13 @@ package com.gve.testapplication.feature.movieslist.presentation;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.gve.testapplication.core.recyclerview.DisplayableItem;
-import com.gve.testapplication.feature.movieslist.domain.EndlessListMovieLogic;
+import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
+import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.EndlessListDomainLogic;
+import com.gve.testapplication.feature.Movie;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -31,10 +33,10 @@ public class LifeCycleMovieViewModel extends ViewModel {
 
     private final MutableLiveData<List<DisplayableItem>> repositoryListLiveData = new MutableLiveData<>();
 
-    private EndlessListMovieLogic viewModel;
+    private EndlessListDomainLogic<Movie> viewModel;
 
     @Inject
-    LifeCycleMovieViewModel(@NonNull final EndlessListMovieLogic viewModel) {
+    LifeCycleMovieViewModel(@NonNull final EndlessListDomainLogic<Movie> viewModel) {
         // Bind view model
         this.viewModel = viewModel;
         compositeDisposable.add(bindToListRepos());
@@ -59,7 +61,23 @@ public class LifeCycleMovieViewModel extends ViewModel {
         return repositoryListLiveData;
     }
 
-    public Callable callableFetch() {
-        return viewModel.callableFetch();
+    public Callable getCallableFetch() {
+        return viewModel.getCallableFetch();
+    }
+
+    public static class LifeCycleMovieViewModelFactory implements ViewModelProvider.Factory {
+
+        private final EndlessListDomainLogic<Movie> viewModel;
+
+        @Inject
+        public LifeCycleMovieViewModelFactory(EndlessListDomainLogic endlessListMovieLogic) {
+            this.viewModel = endlessListMovieLogic;
+        }
+
+        @NonNull
+        @Override
+        public LifeCycleMovieViewModel  create(@NonNull Class modelClass) {
+            return  new LifeCycleMovieViewModel(viewModel);
+        }
     }
 }

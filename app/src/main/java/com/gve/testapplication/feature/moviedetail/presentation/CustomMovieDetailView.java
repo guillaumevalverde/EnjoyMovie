@@ -1,7 +1,6 @@
 package com.gve.testapplication.feature.moviedetail.presentation;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,6 @@ public class CustomMovieDetailView extends RelativeLayout {
 
     private static final String TAG = CustomMovieDetailView.class.getSimpleName();
     private MovieDetailRepo repo;
-    private Context context;
     private ImageView movieIV;
     private TextView movieTitleTV;
     private TextView movieVoteTV;
@@ -40,27 +38,10 @@ public class CustomMovieDetailView extends RelativeLayout {
     public CustomMovieDetailView(Context context, Picasso picasso, Movie movie, MovieDetailRepo repo) {
         super(context);
         this.repo = repo;
-        this.context = context;
         this.movieRef = movie;
         this.picasso = picasso;
         init(context);
     }
-
-    public CustomMovieDetailView(Context context, AttributeSet attrs, MovieDetailRepo repo) {
-        super(context, attrs);
-        init(context);
-        this.repo = repo;
-        this.context = context;
-    }
-
-    public CustomMovieDetailView(Context context, AttributeSet attrs, int defStyleAttr,
-                                 MovieDetailRepo repo) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-        this.repo = repo;
-        this.context = context;
-    }
-
 
     private void init(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.movie_detail,

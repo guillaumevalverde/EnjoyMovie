@@ -66,7 +66,7 @@
 
     </LinearLayout>
 
-    <com.gve.testapplication.feature.moviedetail.presentation.InfiniteViewPager
+    <com.gve.testapplication.core.presentation.InfiniteViewPager
         android:id="@+id/movie_detail_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

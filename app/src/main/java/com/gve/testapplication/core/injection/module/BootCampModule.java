@@ -23,7 +23,6 @@ public class BootCampModule {
     public static final String API_KEY = "movie_api_key";
 
     @Provides
-    @Singleton
     @Named(API_KEY)
     static String provideApiModuleUrlConfig() {
         return BuildConfig.MOVIE_API_KEY;
@@ -34,12 +33,6 @@ public class BootCampModule {
     @Singleton
     Context provideApplicationContext(Application app) {
         return app.getApplicationContext();
-    }
-
-    @Provides
-    @Singleton
-    static SharedPreferences provideSharedPreference(@ForApplication Context context) {
-        return context.getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
     }
 
 }

@@ -20,15 +20,15 @@ import static com.gve.testapplication.core.injection.module.BootCampModule.API_K
  * Created by gve on 29/11/2017.
  */
 
-public class MovieDetailPagerViewModel {
+public class MovieDetailPagerRepo {
     private MovieApiService fetcher;
     private String apiKey;
     private Movie movieRef;
 
 
-    public MovieDetailPagerViewModel(@NonNull Movie movieRef,
-                                     @NonNull MovieApiService fetcher,
-                                     @NonNull @Named(API_KEY) String apiKey) {
+    public MovieDetailPagerRepo(@NonNull Movie movieRef,
+                                @NonNull MovieApiService fetcher,
+                                @NonNull @Named(API_KEY) String apiKey) {
         this.fetcher = fetcher;
         this.apiKey = apiKey;
         this.movieRef = movieRef;
@@ -37,7 +37,7 @@ public class MovieDetailPagerViewModel {
     public Single<List<Movie>> getMovieWithSimilar() {
         return fetcher.getSimilarMovie(movieRef.getId(), apiKey, 1)
                 .map(MoviesPage::getResults)
-                .flatMap(MapperMovieRawToMovie.INSTANCE.getMapperListMovieRawToMovie())
+                .flatMap(MapperMovie.mapperListMovieRawToMovie())
                 .map(moviesSimilar -> {
                     List<Movie> movies = new ArrayList<>();
                     movies.add(movieRef);
@@ -46,20 +46,20 @@ public class MovieDetailPagerViewModel {
                 });
     }
 
-    public static class FactoryPagerViewModel {
+    public static class FactoryMovieDetailPagerRepo {
 
         private MovieApiService fetcher;
         private String apiKey;
 
         @Inject
-        public FactoryPagerViewModel(@NonNull MovieApiService fetcher,
-                                     @NonNull @Named(API_KEY) String apiKey) {
+        public FactoryMovieDetailPagerRepo(@NonNull MovieApiService fetcher,
+                                           @NonNull @Named(API_KEY) String apiKey) {
             this.apiKey = apiKey;
             this.fetcher = fetcher;
         }
 
-        public MovieDetailPagerViewModel getViewModel(Movie movieRef) {
-            return new MovieDetailPagerViewModel(movieRef, fetcher, apiKey);
+        public MovieDetailPagerRepo getViewModel(Movie movieRef) {
+            return new MovieDetailPagerRepo(movieRef, fetcher, apiKey);
         }
     }
 }
