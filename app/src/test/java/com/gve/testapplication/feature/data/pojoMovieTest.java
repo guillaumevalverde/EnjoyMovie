@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.MovieDetail;
 import com.gve.testapplication.feature.MovieRaw;
+import com.gve.testapplication.feature.MovieRawWithSimilar;
 import com.gve.testapplication.feature.MoviesPage;
 import com.gve.testapplication.test_common.BaseTest;
 

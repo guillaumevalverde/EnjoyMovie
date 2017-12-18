@@ -25,9 +25,13 @@ import com.gve.testapplication.feature.moviedetail.presentation.injection.MovieD
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -43,10 +47,13 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
 
     @Inject
     MovieDetailPagerViewModel.FactoryPagerViewModel factoryPagerViewModel;
+
     @Inject
     MovieDetailRepo repo;
+
     @Inject
     Picasso picasso;
+
     private InfiniteViewPager pager;
 
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -94,19 +101,23 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
         });
 
 
-        InfiniteViewPagerAdapter pagerAdapter =
-                new InfiniteViewPagerAdapter(getBaseContext(), movieRef, repo, picasso);
-        disposable.add(factoryPagerViewModel.getViewModel(movieRef).getMovie().subscribe(
+        final InfiniteViewPagerAdapter pagerAdapter =
+                new InfiniteViewPagerAdapter(getBaseContext(), new ArrayList<>(), repo, picasso);
+
+        disposable.add(factoryPagerViewModel.getViewModel(movieRef).getMovieWithSimilar()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                 movies -> {
-                    pagerAdapter.addRessource(movies);
-                    pager.setCurrentItem(0);
+                    pagerAdapter.addRessourceWithouNotify(movies);
+                    pager.setAdapter(pagerAdapter);
                 }, error -> Log.e(TAG, "error: " + error.getMessage())));
 
 
         getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
-                Log.v(TAG, "onTransitionStart");
+                Log.d(TAG, "onTransitionStart");
                 handler.post(() -> {
                     target.setVisibility(View.VISIBLE);
                     targetTV.setVisibility(View.VISIBLE);
@@ -116,6 +127,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
 
             @Override
             public void onTransitionEnd(Transition transition) {
+                Log.d(TAG, "onTransitionEnd");
                 handler.post(() -> {
                     target.setVisibility(View.INVISIBLE);
                     targetTV.setVisibility(View.INVISIBLE);
@@ -125,7 +137,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
 
             @Override
             public void onTransitionCancel(Transition transition) {
-                Log.v(TAG, "onTransitionCancel");
+                Log.d(TAG, "onTransitionCancel");
                 handler.post(() -> {
                     target.setVisibility(View.INVISIBLE);
                     targetTV.setVisibility(View.INVISIBLE);
@@ -148,8 +160,6 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
                 });
             }
         });
-
-        pager.setAdapter(pagerAdapter);
     }
 
     private void scheduleStartPostponedTransition(final View sharedElement) {
@@ -162,6 +172,12 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
                         return true;
                     }
                 });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
     }
 
     @Override

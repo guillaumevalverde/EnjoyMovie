@@ -3,7 +3,6 @@ package com.gve.testapplication.feature.moviedetail.presentation;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -23,16 +22,13 @@ public class InfiniteViewPagerAdapter extends PagerAdapter {
 
     private static final String TAG = InfiniteViewPagerAdapter.class.getSimpleName();
     Context mContext;
-    LayoutInflater mLayoutInflater;
     private List<Movie> resources = new ArrayList<>();
     private MovieDetailRepo repo;
     private Picasso picasso;
 
-    public InfiniteViewPagerAdapter(Context context, Movie movieRef, MovieDetailRepo repo, Picasso picasso) {
+    public InfiniteViewPagerAdapter(Context context, List<Movie> movies, MovieDetailRepo repo, Picasso picasso) {
         mContext = context;
-        Log.v(TAG, "movieref: " + movieRef.toString());
-        this.resources.add(movieRef);
-        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.resources.addAll(movies);
         this.repo = repo;
         this.picasso = picasso;
     }
@@ -42,8 +38,6 @@ public class InfiniteViewPagerAdapter extends PagerAdapter {
         if (getRealCount() <= 1) {
             return getRealCount();
         }
-        // warning: scrolling to very high values (1,000,000+) results in
-        // strange drawing behaviour
         return Integer.MAX_VALUE;
     }
 
@@ -92,14 +86,17 @@ public class InfiniteViewPagerAdapter extends PagerAdapter {
 
 
     public void addRessource(List<Movie> resources) {
+        addRessourceWithouNotify(resources);
+        this.notifyDataSetChanged();
+    }
+
+    public void addRessourceWithouNotify(List<Movie> resources) {
         this.resources.addAll(resources);
         Log.d(TAG, "add Ressources: :");
         for (Movie movie: resources) {
             Log.d(TAG, "movie: " + movie.toString());
         }
-        this.notifyDataSetChanged();
     }
-
     @Override
     public boolean isViewFromObject(View view, Object object) {
      //   Log.d(TAG, "isViewFromObject : " + (view == ((RelativeLayout) object)));
