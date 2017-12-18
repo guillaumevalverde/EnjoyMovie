@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature.movieslist.presentation;
+package com.gve.testapplication.feature.movieslist.presentation.recyclerview;
 
 import com.gve.testapplication.core.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.recyclerview.ItemComparator;

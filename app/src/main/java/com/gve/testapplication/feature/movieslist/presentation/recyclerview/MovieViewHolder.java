@@ -56,11 +56,11 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         MovieDetailActivity.setMovieFromIntent(intent, movie);
         Pair<View, String> p1 = Pair.create(movieIV, "profile");
         Pair<View, String> p2 = Pair.create(movieNameTV, "title");
-        //Pair<View, String> p3 = Pair.create(movieStarIV, "star");
-        //Pair<View, String> p4 = Pair.create(movieVoteTv, "vote");
+        Pair<View, String> p3 = Pair.create(movieStarIV, "star");
+        Pair<View, String> p4 = Pair.create(movieVoteTv, "vote");
 
         ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(activity, p1, p2);
+                makeSceneTransitionAnimation(activity, p1, p2, p3, p4);
 
         itemView.getContext().startActivity(intent, options.toBundle());
     }

@@ -50,8 +50,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/spacing_tiny"
             android:padding="@dimen/image_card_padding"
-            android:src="@drawable/star"
-            android:transitionName="star"/>
+            android:src="@drawable/star" />
 
         <TextView
             android:id="@+id/movie_detail_vote"
@@ -63,8 +62,7 @@
             android:maxLines="2"
             android:padding="@dimen/image_card_padding"
             android:textColor="@color/text_info"
-            tools:text="vote: "
-            android:transitionName="vote"/>
+            tools:text="vote: " />
 
     </LinearLayout>
 

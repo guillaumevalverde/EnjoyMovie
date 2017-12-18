@@ -6,7 +6,7 @@ import com.gve.testapplication.core.recyclerview.ItemComparator;
 import com.gve.testapplication.core.recyclerview.RecyclerViewAdapter;
 import com.gve.testapplication.core.recyclerview.ViewHolderBinder;
 import com.gve.testapplication.core.recyclerview.ViewHolderFactory;
-import com.gve.testapplication.feature.movieslist.presentation.MovieItemComparator;
+import com.gve.testapplication.feature.movieslist.presentation.recyclerview.MovieItemComparator;
 import com.gve.testapplication.feature.movieslist.presentation.recyclerview.MovieViewHolder;
 
 import java.util.Map;

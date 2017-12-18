@@ -27,7 +27,8 @@
         android:textColor="@color/text_main"
         android:textSize="@dimen/text_large"
         android:textStyle="bold"
-        tools:text="title movie" />
+        tools:text="title movie"
+        android:transitionName="title"/>
 
 
     <LinearLayout
