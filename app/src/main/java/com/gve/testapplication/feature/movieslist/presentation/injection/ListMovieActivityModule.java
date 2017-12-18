@@ -1,5 +1,6 @@
 package com.gve.testapplication.feature.movieslist.presentation.injection;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.gve.testapplication.core.injection.qualifiers.ForActivity;
@@ -16,16 +17,23 @@ import dagger.Provides;
 public class ListMovieActivityModule {
 
     @ForActivity
-    private Context context;
+    private Activity activity;
 
-    public ListMovieActivityModule(Context context) {
-        this.context = context;
+    public ListMovieActivityModule(Activity activity) {
+        this.activity = activity;
     }
 
     @Provides
     @ActivityScope
     @ForActivity
     public Context getContext() {
-        return context;
+        return activity.getBaseContext();
+    }
+
+    @Provides
+    @ActivityScope
+    @ForActivity
+    public Activity getActivity() {
+        return activity;
     }
 }

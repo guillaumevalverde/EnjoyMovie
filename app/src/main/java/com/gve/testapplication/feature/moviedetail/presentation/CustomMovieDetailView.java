@@ -31,6 +31,7 @@ public class CustomMovieDetailView extends RelativeLayout {
     private Context context;
     private ImageView movieIV;
     private TextView movieTitleTV;
+    private TextView movieVoteTV;
     private TextView movieOverViewTV;
     private Movie movieRef;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -70,7 +71,11 @@ public class CustomMovieDetailView extends RelativeLayout {
         movieIV = view.findViewById(R.id.movie_detail_image);
         movieTitleTV = view.findViewById(R.id.movie_detail_title);
         movieOverViewTV = view.findViewById(R.id.movie_detail_overview);
+        movieVoteTV = view.findViewById(R.id.movie_detail_vote);
         movieTitleTV.setText(movieRef.getName());
+        movieVoteTV.setText(movieVoteTV.getResources()
+                .getString(R.string.movie_vote, movieRef.getVote()));
+
         PicassoUtils.showImageWithPicasso(picasso, movieIV, movieRef.getUrl());
 
         disposable.add(repo.fetch(movieRef.getId())
@@ -83,11 +88,6 @@ public class CustomMovieDetailView extends RelativeLayout {
 
     public CustomMovieDetailView(Context context) {
         super(context);
-    }
-
-    private void updateMovie(Movie movie) {
-        //PicassoUtils.showImageWithPicasso(picasso, movieIV, movie.getUrl());
-        movieTitleTV.setText(movie.getName());
     }
 
     private void updateDetail(MovieDetail moviedetail) {

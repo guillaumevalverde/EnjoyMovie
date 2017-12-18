@@ -1,8 +1,10 @@
 package com.gve.testapplication.feature.movieslist.presentation.recyclerview;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,14 +28,18 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     private TextView movieNameTV;
     private TextView movieVoteTv;
     private ImageView movieIV;
+    private ImageView movieStarIV;
     private Picasso picasso;
+    private Activity activity;
 
-    public MovieViewHolder(final View itemView, Picasso picasso) {
+    public MovieViewHolder(final View itemView, Picasso picasso, Activity activity) {
         super(itemView);
         this.picasso = picasso;
         movieNameTV = itemView.findViewById(R.id.movie_card_title);
         movieVoteTv = itemView.findViewById(R.id.movie_card_vote);
         movieIV = itemView.findViewById(R.id.movie_card_image);
+        movieStarIV = itemView.findViewById(R.id.movie_card_star);
+        this.activity = activity;
     }
 
     private void bind(@NonNull final Movie movie) {
@@ -48,24 +54,34 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     private void startMovieDetailActivity(Movie movie) {
         Intent intent = new Intent(itemView.getContext(), MovieDetailActivity.class);
         MovieDetailActivity.setMovieFromIntent(intent, movie);
-        itemView.getContext().startActivity(intent);
+        Pair<View, String> p1 = Pair.create(movieIV, "profile");
+        Pair<View, String> p2 = Pair.create(movieNameTV, "title");
+        //Pair<View, String> p3 = Pair.create(movieStarIV, "star");
+        //Pair<View, String> p4 = Pair.create(movieVoteTv, "vote");
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(activity, p1, p2);
+
+        itemView.getContext().startActivity(intent, options.toBundle());
     }
 
     public static class MovieCardHolderFactory extends ViewHolderFactory {
 
         private Picasso picasso;
+        private Activity activity;
 
         @Inject
-        MovieCardHolderFactory(@NonNull @ForActivity final Context context,  Picasso picasso) {
-            super(context);
+        MovieCardHolderFactory(@NonNull @ForActivity final Activity activity, Picasso picasso) {
+            super(activity);
             this.picasso = picasso;
+            this.activity = activity;
         }
 
         @NonNull
         @Override
         public RecyclerView.ViewHolder createViewHolder(@NonNull final ViewGroup parent) {
             return new MovieViewHolder(LayoutInflater.from(context)
-                    .inflate(R.layout.movie_recycler_row, parent, false), picasso);
+                    .inflate(R.layout.movie_recycler_row, parent, false), picasso, activity);
         }
     }
 

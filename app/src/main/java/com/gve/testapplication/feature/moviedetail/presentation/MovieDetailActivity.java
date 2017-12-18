@@ -2,21 +2,27 @@ package com.gve.testapplication.feature.moviedetail.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gve.testapplication.R;
 import com.gve.testapplication.core.BootCampApp;
 import com.gve.testapplication.core.injection.activity.BaseInjectingActivity;
+import com.gve.testapplication.core.utils.PicassoUtils;
 import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.data.MovieDetailPagerViewModel;
 import com.gve.testapplication.feature.data.MovieDetailRepo;
 import com.gve.testapplication.feature.moviedetail.presentation.injection.MovieDetailActivityComponent;
 import com.gve.testapplication.feature.moviedetail.presentation.injection.MovieDetailActivityModule;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -45,6 +51,8 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
+    private Handler handler = new Handler();
+
     public static Movie getMovieFromIntent(Intent intent) {
         return new Movie(intent.getLongExtra(ID, -1),
                 intent.getStringExtra(NAME),
@@ -68,6 +76,24 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
         getSupportActionBar().setTitle(this.getResources().getString(R.string.app_name));
         pager = findViewById(R.id.movie_detail_pager);
 
+        ImageView target = findViewById(R.id.movie_detail_transition_image);
+        TextView targetTV = findViewById(R.id.movie_detail_transition_title);
+        LinearLayout starLL = findViewById(R.id.movie_detail_transition_ll);
+        targetTV.setText(movieRef.getName());
+        supportPostponeEnterTransition();
+
+        PicassoUtils.showImageWithPicasso(picasso, target, movieRef.getUrl(), new Callback() {
+            @Override
+            public void onSuccess() {
+                scheduleStartPostponedTransition(target);
+            }
+
+            @Override
+            public void onError() {
+            }
+        });
+
+
         InfiniteViewPagerAdapter pagerAdapter =
                 new InfiniteViewPagerAdapter(getBaseContext(), movieRef, repo, picasso);
         disposable.add(factoryPagerViewModel.getViewModel(movieRef).getMovie().subscribe(
@@ -76,7 +102,66 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
                     pager.setCurrentItem(0);
                 }, error -> Log.e(TAG, "error: " + error.getMessage())));
 
+
+        getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+                Log.v(TAG, "onTransitionStart");
+                handler.post(() -> {
+                    target.setVisibility(View.VISIBLE);
+                    targetTV.setVisibility(View.VISIBLE);
+                    starLL.setVisibility(View.VISIBLE);
+                });
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                handler.post(() -> {
+                    target.setVisibility(View.INVISIBLE);
+                    targetTV.setVisibility(View.INVISIBLE);
+                    starLL.setVisibility(View.INVISIBLE);
+                });
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+                Log.v(TAG, "onTransitionCancel");
+                handler.post(() -> {
+                    target.setVisibility(View.INVISIBLE);
+                    targetTV.setVisibility(View.INVISIBLE);
+                    starLL.setVisibility(View.INVISIBLE);
+                });
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+                Log.v(TAG, "onTransitionResume");
+                handler.post(() -> {
+                    target.setVisibility(View.VISIBLE);
+                    targetTV.setVisibility(View.VISIBLE);
+                    starLL.setVisibility(View.VISIBLE);
+                });
+            }
+        });
+
         pager.setAdapter(pagerAdapter);
+    }
+
+    private void scheduleStartPostponedTransition(final View sharedElement) {
+        sharedElement.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                        startPostponedEnterTransition();
+                        return true;
+                    }
+                });
     }
 
     @Override
