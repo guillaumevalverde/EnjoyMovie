@@ -5,13 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
 
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
-import com.gve.testapplication.feature.Movie;
-import com.gve.testapplication.feature.MovieDetail;
-import com.gve.testapplication.feature.MoviesPage;
+import com.gve.testapplication.feature.data.Movie;
+import com.gve.testapplication.feature.data.MovieDetail;
 import com.gve.testapplication.feature.data.MapperMovie;
 import com.gve.testapplication.feature.data.MovieApiService;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;

@@ -3,13 +3,12 @@ package com.gve.testapplication.feature.movieslist.data;
 import android.arch.persistence.room.EmptyResultSetException;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
-import android.util.Log;
 
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
 import com.gve.testapplication.core.injection.qualifiers.TopRated;
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.RepoInfiniteScrolling;
-import com.gve.testapplication.feature.Movie;
-import com.gve.testapplication.feature.MoviesPage;
+import com.gve.testapplication.feature.data.Movie;
+import com.gve.testapplication.feature.data.MoviesPage;
 import com.gve.testapplication.feature.data.MapperMovie;
 import com.gve.testapplication.feature.data.MovieApiService;
 

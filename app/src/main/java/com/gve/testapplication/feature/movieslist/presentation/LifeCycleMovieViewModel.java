@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.EndlessListDomainLogic;
-import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.Movie;
 
 import java.util.List;
 import java.util.concurrent.Callable;

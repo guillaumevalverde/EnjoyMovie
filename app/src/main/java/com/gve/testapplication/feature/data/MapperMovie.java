@@ -1,9 +1,5 @@
 package com.gve.testapplication.feature.data;
 
-import com.gve.testapplication.feature.Movie;
-import com.gve.testapplication.feature.MovieDetail;
-import com.gve.testapplication.feature.MovieDetailRaw;
-import com.gve.testapplication.feature.MovieRaw;
 import com.gve.testapplication.feature.Utils;
 
 import java.util.List;

@@ -1,9 +1,5 @@
 package com.gve.testapplication.feature.data;
 
-import com.gve.testapplication.feature.MovieDetail;
-import com.gve.testapplication.feature.MovieDetailRaw;
-import com.gve.testapplication.feature.MoviesPage;
-
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

@@ -25,7 +25,7 @@ import com.gve.testapplication.core.presentation.recyclerview.RecyclerViewAdapte
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.EndlessListDomainLogic;
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.EndlessScrollListenerDelegate;
 import com.gve.testapplication.core.utils.ConnectivityReceiver;
-import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.Movie;
 import com.gve.testapplication.feature.movieslist.presentation.injection.ListMovieActivityComponent;
 import com.gve.testapplication.feature.movieslist.presentation.injection.ListMovieActivityModule;
 

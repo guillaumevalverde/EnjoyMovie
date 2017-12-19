@@ -1,10 +1,10 @@
 package com.gve.testapplication.test_common;
 
 import com.google.gson.Gson;
-import com.gve.testapplication.feature.Movie;
-import com.gve.testapplication.feature.MovieDetail;
-import com.gve.testapplication.feature.MovieRaw;
-import com.gve.testapplication.feature.MoviesPage;
+import com.gve.testapplication.feature.data.Movie;
+import com.gve.testapplication.feature.data.MovieDetail;
+import com.gve.testapplication.feature.data.MovieRaw;
+import com.gve.testapplication.feature.data.MoviesPage;
 import com.gve.testapplication.feature.data.MapperMovie;
 
 import java.util.List;

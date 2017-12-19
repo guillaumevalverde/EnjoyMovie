@@ -12,7 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.gve.testapplication.core.data.AppDataBase;
 import com.gve.testapplication.core.data.roomjsonstore.RoomJson;
 import com.gve.testapplication.core.data.roomjsonstore.RoomJsonStore;
-import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.Movie;
 import com.gve.testapplication.feature.movieslist.data.ListMovieRepo;
 import com.gve.testapplication.test_common.MovieUtil;
 

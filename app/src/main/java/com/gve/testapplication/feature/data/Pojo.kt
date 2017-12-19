@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature
+package com.gve.testapplication.feature.data
 
 /**
  * Created by gve on 14/12/2017.

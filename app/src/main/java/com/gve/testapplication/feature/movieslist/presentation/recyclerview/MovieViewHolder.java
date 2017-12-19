@@ -17,7 +17,7 @@ import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.presentation.recyclerview.ViewHolderBinder;
 import com.gve.testapplication.core.presentation.recyclerview.ViewHolderFactory;
 import com.gve.testapplication.core.utils.PicassoUtils;
-import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.Movie;
 import com.gve.testapplication.feature.moviedetail.presentation.MovieDetailActivity;
 import com.squareup.picasso.Picasso;
 

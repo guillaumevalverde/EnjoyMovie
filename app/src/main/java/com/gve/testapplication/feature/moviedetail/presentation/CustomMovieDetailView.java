@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.gve.testapplication.R;
 import com.gve.testapplication.core.utils.PicassoUtils;
-import com.gve.testapplication.feature.Movie;
-import com.gve.testapplication.feature.MovieDetail;
+import com.gve.testapplication.feature.data.Movie;
+import com.gve.testapplication.feature.data.MovieDetail;
 
 import com.gve.testapplication.feature.moviedetail.data.MovieDetailRepo;
 import com.squareup.picasso.Picasso;

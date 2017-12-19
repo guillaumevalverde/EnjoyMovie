@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.Movie;
 import com.gve.testapplication.feature.moviedetail.data.MovieDetailRepo;
 import com.squareup.picasso.Picasso;
 

@@ -3,7 +3,7 @@ package com.gve.testapplication.core.injection.module;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.EndlessListDomainLogic;
-import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.Movie;
 import com.gve.testapplication.feature.movieslist.data.ListMovieRepo;
 import com.gve.testapplication.feature.movieslist.presentation.LifeCycleMovieViewModel;
 import com.gve.testapplication.feature.movieslist.presentation.recyclerview.MovieDisplayableMapper;

@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.EndlessListDomainLogic;
-import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.Movie;
 import com.gve.testapplication.feature.movieslist.data.ListMovieRepo;
 import com.gve.testapplication.feature.data.MovieUtil;
 import com.gve.testapplication.feature.movieslist.presentation.recyclerview.MovieDisplayableMapper;

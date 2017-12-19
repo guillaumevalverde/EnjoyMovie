@@ -10,11 +10,11 @@ import com.gve.testapplication.core.data.roomjsonstore.RoomJsonStore;
 import com.gve.testapplication.core.injection.qualifiers.ForApplication;
 import com.gve.testapplication.core.injection.qualifiers.Similar;
 import com.gve.testapplication.core.injection.qualifiers.TopRated;
-import com.gve.testapplication.feature.MovieDetail;
+import com.gve.testapplication.feature.data.MovieDetail;
 import com.gve.testapplication.feature.moviedetail.data.MovieDetailPagerRepo;
 import com.gve.testapplication.feature.moviedetail.data.MovieDetailRepo;
 import com.gve.testapplication.feature.movieslist.data.ListMovieRepo;
-import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.Movie;
 
 import java.util.List;
 

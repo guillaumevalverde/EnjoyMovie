@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.presentation.recyclerview.RecyclerViewConstant;
-import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.data.Movie;
 
 import java.util.List;
 

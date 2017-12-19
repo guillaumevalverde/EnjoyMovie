@@ -6,8 +6,8 @@ import android.support.v4.util.Pair;
 
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
 import com.gve.testapplication.core.injection.qualifiers.Similar;
-import com.gve.testapplication.feature.Movie;
-import com.gve.testapplication.feature.MoviesPage;
+import com.gve.testapplication.feature.data.Movie;
+import com.gve.testapplication.feature.data.MoviesPage;
 import com.gve.testapplication.feature.data.MapperMovie;
 import com.gve.testapplication.feature.data.MovieApiService;
 
