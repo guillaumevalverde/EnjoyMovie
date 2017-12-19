@@ -15,16 +15,6 @@ import com.gve.testapplication.core.data.roomjsonstore.RoomJsonModelDao;
 @Database(entities = {RoomJson.class}, version = 1)
 public abstract class AppDataBase extends RoomDatabase {
 
-    private static AppDataBase instance;
-
-    public static AppDataBase getDatabase(Context context) {
-        if (instance == null) {
-            instance =  Room.databaseBuilder(context.getApplicationContext(), AppDataBase.class, "App_DataBase")
-                            .build();
-        }
-        return instance;
-    }
-
     public abstract RoomJsonModelDao roomJsonModel();
 
 }

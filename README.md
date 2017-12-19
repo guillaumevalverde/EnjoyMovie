@@ -1,4 +1,4 @@
-# Xing App
+# EnjoyMovie App
 
 ## Tools and Set-up
 Rxjava2, dagger2 help in the set-up of the architecture. 
@@ -6,6 +6,8 @@ Stetho as a usefull devtool, build variant debug and release and injection are u
 
 CI with travis, check if release and debug flavor compile, also look at the Unit test at the moment
 (Todo: run androidTest for the databases)
+
+Retrofit and Picasso for download of images
 
 ## Architecture
 
@@ -34,3 +36,9 @@ we put the buissness logic to get a list with paging fetching
 ## Presentation
 using MVVM with livedata and ViewModel
 This is all ui related
+
+## Component
+RoomJsonStore, is a store backed up by Room(sql data base), this store serve the data, when the data
+is put in the store we save the timestamp. then we can implement a deprecated method.
+
+

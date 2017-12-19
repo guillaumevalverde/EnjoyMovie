@@ -1,6 +1,8 @@
 package com.gve.testapplication.core.injection.module;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,13 +33,13 @@ import dagger.Provides;
 public final class DataModule {
 
     @Provides
-    @Singleton
     @TopRated
     ReactiveStoreSingular<List<Movie>> provideRoomMovieListRepoStore(
             @ForApplication Context context,
+            AppDataBase appDataBase,
             Gson gson) {
         return new RoomJsonStore<List<Movie>>(
-                AppDataBase.getDatabase(context).roomJsonModel(),
+                appDataBase.roomJsonModel(),
                 ListMovieRepo.getKeyFunction(),
                 json -> gson.fromJson(json, new TypeToken<List<Movie>>() { }.getType()),
                 gson::toJson,
@@ -45,13 +47,13 @@ public final class DataModule {
     }
 
     @Provides
-    @Singleton
     @Similar
     ReactiveStoreSingular<List<Movie>> provideRoomMovieListSimilarRepoStore(
             @ForApplication Context context,
+            AppDataBase appDataBase,
             Gson gson) {
         return new RoomJsonStore<List<Movie>>(
-                AppDataBase.getDatabase(context).roomJsonModel(),
+                appDataBase.roomJsonModel(),
                 MovieDetailPagerRepo.getKeyFunction(),
                 json -> gson.fromJson(json, new TypeToken<List<Movie>>() { }.getType()),
                 gson::toJson,
@@ -59,18 +61,24 @@ public final class DataModule {
     }
 
     @Provides
-    @Singleton
     ReactiveStoreSingular<MovieDetail> provideRoomMovieDetialRepoStore(
             @ForApplication Context context,
+            AppDataBase appDataBase,
             Gson gson) {
         return new RoomJsonStore<MovieDetail>(
-                AppDataBase.getDatabase(context).roomJsonModel(),
+                appDataBase.roomJsonModel(),
                 MovieDetailRepo.getKeyFunction(),
                 json -> gson.fromJson(json, new TypeToken<MovieDetail>() { }.getType()),
                 gson::toJson,
                 () -> "");
     }
 
+    @Provides
+    @Singleton
+    AppDataBase provideAppDataBase(@ForApplication Context context) {
+        return Room.databaseBuilder(context.getApplicationContext(), AppDataBase.class, "App_DataBase")
+                .build();
+    }
 
 
 }
