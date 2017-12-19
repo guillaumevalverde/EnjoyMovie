@@ -115,6 +115,27 @@
             android:textColor="@color/text_info"
             tools:text="budget: " />
 
+        <TextView
+            android:id="@+id/movie_detail_empty"
+            android:layout_below="@+id/movie_detail_image"
+            android:layout_marginTop="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_data_network"
+            android:layout_centerInParent="true"
+            tools:visibility="visible"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/movie_detail_progress_bar"
+            android:layout_below="@+id/movie_detail_image"
+            android:layout_centerHorizontal="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="100dp"
+            android:visibility="visible"
+            tools:visibility="visible"/>
+
 
     </RelativeLayout>
 </ScrollView>

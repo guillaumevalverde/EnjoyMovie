@@ -1,7 +1,10 @@
 package com.gve.testapplication.feature.data;
 
 import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.MovieDetail;
+import com.gve.testapplication.feature.MovieDetailRaw;
 import com.gve.testapplication.feature.MovieRaw;
+import com.gve.testapplication.feature.Utils;
 
 import java.util.List;
 
@@ -26,6 +29,26 @@ public class MapperMovie {
     }
 
     public static  Function<List<MovieRaw>, Single<List<Movie>>> mapperListMovieRawToMovie() {
+        return repoRaw -> Observable.fromIterable(repoRaw)
+                .map(mapperMovieRawToMovie()).toList();
+    }
+
+    public static Function<MovieDetailRaw, MovieDetail> mapperMovieDetailRawToMovieDetail() {
+        return movieRaw ->
+                new MovieDetail(movieRaw.getId(),
+                        Utils.getNumberInCurrency(movieRaw.getBudget()),
+                        movieRaw.getOriginal_language(),
+                        movieRaw.getOriginal_title(),
+                        movieRaw.getOverview(),
+                        movieRaw.getPopularity(),
+                        IMAGE_BASE_URL + movieRaw.getPoster_path(),
+                        Utils.getDate(movieRaw.getRelease_date()),
+                        Utils.getNumberInCurrency(movieRaw.getRevenue()),
+                        movieRaw.getVote_count(),
+                        movieRaw.getVote_average());
+    }
+
+    public static  Function<List<MovieRaw>, Single<List<Movie>>> mapperListMovieDetailRawToMovieDetail() {
         return repoRaw -> Observable.fromIterable(repoRaw)
                 .map(mapperMovieRawToMovie()).toList();
     }

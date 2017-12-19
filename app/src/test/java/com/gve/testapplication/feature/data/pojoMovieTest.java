@@ -49,7 +49,6 @@ public class pojoMovieTest extends BaseTest {
         MovieDetail movie = MovieUtil.getMovieDetail(gson);
 
         assertTrue(movie != null);
-        assertFalse(movie.getAdult());
         assertEquals(550, movie.getId());
     }
 

@@ -6,6 +6,7 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
+import com.gve.testapplication.core.injection.qualifiers.TopRated;
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.RepoInfiniteScrolling;
 import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.MoviesPage;
@@ -41,7 +42,7 @@ public class ListMovieRepo implements RepoInfiniteScrolling<Movie> {
 
     @Inject
     public ListMovieRepo(@NonNull MovieApiService fetcher,
-                         @NonNull ReactiveStoreSingular<List<Movie>> reactiveStore,
+                         @NonNull @TopRated ReactiveStoreSingular<List<Movie>> reactiveStore,
                          @NonNull @Named(API_KEY) String apiKey) {
         this.fetcher = fetcher;
         this.reactiveStore = reactiveStore;

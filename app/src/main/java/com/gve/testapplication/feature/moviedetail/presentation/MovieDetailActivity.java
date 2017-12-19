@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.gve.testapplication.R;
 import com.gve.testapplication.core.BootCampApp;
 import com.gve.testapplication.core.injection.activity.BaseInjectingActivity;
+import com.gve.testapplication.core.injection.qualifiers.Similar;
 import com.gve.testapplication.core.presentation.InfiniteViewPager;
 import com.gve.testapplication.core.utils.PicassoUtils;
 import com.gve.testapplication.feature.Movie;
@@ -43,6 +44,7 @@ import io.reactivex.subjects.PublishSubject;
 public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivityComponent> {
     public static final String TAG = MovieDetailActivity.class.getSimpleName();
     public static final String TRANSITION = "TRANSITION_DONE";
+    public static final String INDEX = "INDEX_PAGER";
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String URL = "url";
@@ -59,6 +61,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
 
     private InfiniteViewPager pager;
     private ProgressBar progressBar;
+    private TextView emptyTv;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -91,6 +94,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
         TextView targetTV = findViewById(R.id.movie_detail_transition_title);
         TextView movieVoteTv = findViewById(R.id.movie_detail_transition_vote);
         RelativeLayout transitionRL = findViewById(R.id.movie_detail_transition_rl);
+        emptyTv = findViewById(R.id.movie_detail_empty);
         progressBar = findViewById(R.id.movie_detail_progress_bar);
         targetTV.setText(movieRef.getName());
         movieVoteTv.setText(movieVoteTv.getResources()
@@ -102,7 +106,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
                 new InfiniteViewPagerAdapter(getBaseContext(), new ArrayList<>(), repo, picasso);
 
         disposable.add(
-                Single.zip(factoryPagerViewModel.getViewModel(movieRef).getMovieWithSimilar()
+                Single.zip(factoryPagerViewModel.getViewModel(movieRef).get()
                                 .doOnSuccess(pagerAdapter::addRessourceWithouNotify),
                         isTransitionDone.single(true), (a, b) -> a)
                         .subscribeOn(Schedulers.io())
@@ -111,10 +115,13 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
                                 movies -> {
                                     Log.v(TAG, "set up adapter");
                                     pager.setAdapter(pagerAdapter);
+                                    if (savedInstanceState != null) {
+                                      pager.setCurrentItem(savedInstanceState.getInt(INDEX));
+                                    }
                                     pager.setVisibility(View.VISIBLE);
                                     transitionRL.setVisibility(View.INVISIBLE);
                                     progressBar.setVisibility(View.INVISIBLE);
-                                }, error -> Log.e(TAG, "error: " + error.getMessage())));
+                                }, error -> onErrorDisplay(error)));
       getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) { }
@@ -145,9 +152,17 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
             isTransitionDone.onComplete();
         }
     }
+
+    public void onErrorDisplay(Throwable error) {
+        emptyTv.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        Log.e(TAG, "error: " + error.getMessage());
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(TRANSITION, true);
+        outState.putInt(INDEX, pager.getCurrentItem());
         super.onSaveInstanceState(outState);
     }
 

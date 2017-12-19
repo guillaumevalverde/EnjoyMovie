@@ -9,5 +9,6 @@
     <string name="movie_detail_revenue">revenue: %s</string>
     <string name="network_issue">Check your Network</string>
     <string name="empty_data">No data</string>
+    <string name="empty_data_network">no data, check Network Connection</string>
 
 </resources>

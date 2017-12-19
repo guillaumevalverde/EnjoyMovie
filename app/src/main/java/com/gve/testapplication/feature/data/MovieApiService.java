@@ -1,6 +1,7 @@
 package com.gve.testapplication.feature.data;
 
 import com.gve.testapplication.feature.MovieDetail;
+import com.gve.testapplication.feature.MovieDetailRaw;
 import com.gve.testapplication.feature.MoviesPage;
 
 import io.reactivex.Single;
@@ -19,8 +20,8 @@ public interface MovieApiService {
                                      @Query("page") int page);
 
     @GET("/3/movie/{id}")
-    Single<MovieDetail> getMovieDetails(@Path("id") Long id,
-                                        @Query("api_key") String key);
+    Single<MovieDetailRaw> getMovieDetails(@Path("id") Long id,
+                                           @Query("api_key") String key);
 
     @GET("/3/movie/{id}/similar")
     Single<MoviesPage> getSimilarMovie(@Path("id") Long id,

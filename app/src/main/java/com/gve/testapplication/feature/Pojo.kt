@@ -9,7 +9,7 @@ data class Movie(val id: Long,
                  val vote: Float,
                  val url: String)
 
-data class MovieDetail(val adult: Boolean,
+data class MovieDetailRaw(val adult: Boolean,
                        val backdrop_path: String,
                        val budget: Int,
                        val homepage: String?,
@@ -23,6 +23,18 @@ data class MovieDetail(val adult: Boolean,
                        val id: Long,
                        val vote_count: Long,
                        val video: Boolean,
+                       val vote_average: Float)
+
+data class MovieDetail(val id: Long,
+                       val budget: String,
+                       val original_language: String,
+                       val original_title: String,
+                       val overview: String?,
+                       val popularity: Float,
+                       val poster_path:String?,
+                       val release_date: String,
+                       val revenue: String,
+                       val vote_count: Long,
                        val vote_average: Float)
 
 data class MovieRaw(val poster_path: String,

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -12,7 +13,7 @@ import com.gve.testapplication.R;
 import com.gve.testapplication.core.utils.PicassoUtils;
 import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.MovieDetail;
-import com.gve.testapplication.feature.Utils;
+
 import com.gve.testapplication.feature.moviedetail.data.MovieDetailRepo;
 import com.squareup.picasso.Picasso;
 
@@ -33,6 +34,8 @@ public class CustomMovieDetailView extends RelativeLayout {
     private TextView movieRevenueTV;
     private TextView movieReleaseDateTV;
     private TextView movieOriginalLanguageTV;
+    private ProgressBar progressBar;
+    private TextView emptyTv;
     private Movie movieRef;
     private CompositeDisposable disposable = new CompositeDisposable();
     private Picasso picasso;
@@ -63,30 +66,40 @@ public class CustomMovieDetailView extends RelativeLayout {
         movieReleaseDateTV = view.findViewById(R.id.movie_detail_release_date);
         movieOriginalLanguageTV = view.findViewById(R.id.movie_detail_original_language);
         TextView movieVoteTV = view.findViewById(R.id.movie_detail_vote);
+        emptyTv = findViewById(R.id.movie_detail_empty);
+        progressBar = findViewById(R.id.movie_detail_progress_bar);
+
         movieTitleTV.setText(movieRef.getName());
         movieVoteTV.setText(movieVoteTV.getResources()
                 .getString(R.string.movie_vote, movieRef.getVote()));
 
         PicassoUtils.showImageWithPicasso(picasso, movieIV, movieRef.getUrl());
 
-        disposable.add(repo.fetch(movieRef.getId())
+        disposable.add(repo.get(movieRef.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateDetail,
-                        error -> Log.e(TAG, "error: " + error.getMessage())));
+                        error -> onErrorDisplay(error)));
+    }
 
+    public void onErrorDisplay(Throwable error) {
+        emptyTv.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        Log.e(TAG, "error: " + error.getMessage());
     }
 
     private void updateDetail(MovieDetail moviedetail) {
         movieOverViewTV.setText(moviedetail.getOverview());
         movieBudgetTV.setText(movieBudgetTV.getResources()
-                .getString(R.string.movie_detail_budget, Utils.getNumberInCurrency(moviedetail.getBudget())));
+                .getString(R.string.movie_detail_budget, moviedetail.getBudget()));
         movieRevenueTV.setText(movieBudgetTV.getResources()
-                .getString(R.string.movie_detail_revenue, Utils.getNumberInCurrency(moviedetail.getRevenue())));
+                .getString(R.string.movie_detail_revenue, moviedetail.getRevenue()));
         movieReleaseDateTV.setText(movieBudgetTV.getResources()
-                .getString(R.string.movie_detail_release_date, Utils.getDate(moviedetail.getRelease_date())));
+                .getString(R.string.movie_detail_release_date, moviedetail.getRelease_date()));
         movieOriginalLanguageTV.setText(movieBudgetTV.getResources()
                 .getString(R.string.movie_detail_original_language, moviedetail.getOriginal_language()));
+        emptyTv.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
