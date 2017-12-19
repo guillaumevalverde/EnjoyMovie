@@ -3,6 +3,7 @@ package com.gve.testapplication.feature.data;
 import android.arch.persistence.room.EmptyResultSetException;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
+import android.util.Log;
 
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.RepoInfiniteScrolling;

@@ -1,6 +1,7 @@
 package com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll;
 
 import android.support.annotation.NonNull;
+import android.support.v4.util.Pair;
 
 import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
 import com.gve.testapplication.core.presentation.recyclerview.RecyclerViewConstant;
@@ -16,6 +17,7 @@ import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Function;
 import io.reactivex.subjects.BehaviorSubject;
+import polanski.option.Option;
 
 import static com.gve.testapplication.core.presentation.recyclerview.DisplayableItem.toDisplayableItem;
 
@@ -28,8 +30,8 @@ public class EndlessListDomainLogic<T> {
     private CompositeDisposable disposable = new CompositeDisposable();
     private Function<List<T>, List<DisplayableItem>> mapper;
     private RepoInfiniteScrolling<T> repo;
-    private BehaviorSubject<List<DisplayableItem>> listBehaviorSubject =
-            BehaviorSubject.createDefault(new ArrayList<DisplayableItem>());
+    private BehaviorSubject<Pair<Option<Throwable>, List<DisplayableItem>>> listBehaviorSubject =
+            BehaviorSubject.createDefault(new Pair<>(Option.none(), new ArrayList<DisplayableItem>()));
 
     private int numPage = 1;
 
@@ -42,30 +44,26 @@ public class EndlessListDomainLogic<T> {
         fetch();
     }
 
-    private void fetch() {
-        if (listBehaviorSubject.getValue().size() > 0) {
-            listBehaviorSubject.onNext(addProgressEmptyRow(listBehaviorSubject.getValue()));
+    public void fetch() {
+        if (listBehaviorSubject.getValue().second.size() > 0) {
+            listBehaviorSubject.onNext(
+                    new Pair<>(Option.none(),
+                            addProgressEmptyRow(listBehaviorSubject.getValue().second)));
         }
         disposable.add(repo.get(numPage)
                 .map(mapper)
                 .map(list -> {
                     List<DisplayableItem> current =
-                            removeLastItemIfEmptyType(listBehaviorSubject.getValue());
+                            removeLastItemIfEmptyType(listBehaviorSubject.getValue().second);
                     current.addAll(list);
                     return current;
                 })
                 .subscribe(list -> {
-                    listBehaviorSubject.onNext(list);
+                    listBehaviorSubject.onNext(new Pair<>(Option.none(), list));
                     numPage++;
                     }, error -> listBehaviorSubject.onNext(
-                        removeLastItemIfEmptyType(listBehaviorSubject.getValue()))));
-    }
-
-   public Callable getCallableFetch() {
-        return () -> {
-            fetch();
-            return "fetched";
-        };
+                        new Pair<>(Option.ofObj(error),
+                                removeLastItemIfEmptyType(listBehaviorSubject.getValue().second)))));
     }
 
     private List<DisplayableItem> addProgressEmptyRow(List<DisplayableItem> list) {
@@ -87,7 +85,7 @@ public class EndlessListDomainLogic<T> {
         return listReturn;
     }
 
-    public Flowable<List<DisplayableItem>> getDisplayableList() {
+    public Flowable<Pair<Option<Throwable>, List<DisplayableItem>>> getDisplayableList() {
         return listBehaviorSubject.toFlowable(BackpressureStrategy.BUFFER);
     }
 }

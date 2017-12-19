@@ -1,5 +1,7 @@
 package com.gve.testapplication;
 
+import android.support.v4.util.Pair;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
@@ -20,6 +22,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.subscribers.TestSubscriber;
+import polanski.option.Option;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -47,10 +50,11 @@ public class EndlessListRepoLogicTest extends BaseTest {
         Mockito.when(repo.get(anyLong())).thenReturn(MovieUtil.getMoviesSingle(gson));
         EndlessListDomainLogic<Movie> viewModel = new EndlessListDomainLogic(new MovieDisplayableMapper(), repo);
 
-        TestSubscriber<List<DisplayableItem>> testSubscriber = viewModel.getDisplayableList().test();
+        TestSubscriber<Pair<Option<Throwable>, List<DisplayableItem>>> testSubscriber =
+                viewModel.getDisplayableList().test();
 
         assertEquals(1, testSubscriber.values().size());
-        assertEquals(20, testSubscriber.values().get(0).size());
+        assertEquals(20, testSubscriber.values().get(0).second.size());
         testSubscriber.assertNoErrors();
         testSubscriber.assertNotComplete();
     }
@@ -65,16 +69,17 @@ public class EndlessListRepoLogicTest extends BaseTest {
         EndlessListDomainLogic<Movie> viewModel = new EndlessListDomainLogic(new MovieDisplayableMapper(), repo);
 
         List<List<DisplayableItem>> listResult = new ArrayList<>();
-        TestSubscriber<List<DisplayableItem>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<Pair<Option<Throwable>, List<DisplayableItem>>> testSubscriber
+                = new TestSubscriber<>();
 
         viewModel.getDisplayableList()
                 .doOnNext(list -> {
-                    System.out.println("list size on next: " + list.size());
-                    listResult.add(list);
+                    System.out.println("list size on next: " + list.second.size());
+                    listResult.add(list.second);
                 })
                 .subscribe(testSubscriber);
 
-        viewModel.getCallableFetch().call();
+        viewModel.fetch();
 
 
         testSubscriber.assertNoErrors();
@@ -100,15 +105,15 @@ public class EndlessListRepoLogicTest extends BaseTest {
         EndlessListDomainLogic<Movie> viewModel = new EndlessListDomainLogic(new MovieDisplayableMapper(), repo);
         List<List<DisplayableItem>> listResult = new ArrayList<>();
 
-        TestSubscriber<List<DisplayableItem>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<Pair<Option<Throwable>, List<DisplayableItem>>> testSubscriber = new TestSubscriber<>();
         viewModel.getDisplayableList()
                 .doOnNext(list -> {
-                    System.out.println("list size on next: " + list.size());
-                    listResult.add(list);
+                    System.out.println("list size on next: " + list.second.size());
+                    listResult.add(list.second);
                 })
                 .subscribe(testSubscriber);
 
-        viewModel.getCallableFetch().call();
+        viewModel.fetch();
 
 
         testSubscriber.assertNoErrors();

@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
+import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.gve.testapplication.core.presentation.recyclerview.DisplayableItem;
@@ -19,6 +20,7 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import polanski.option.Option;
 
 
 /**
@@ -31,7 +33,8 @@ public class LifeCycleMovieViewModel extends ViewModel {
     @NonNull
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private final MutableLiveData<List<DisplayableItem>> repositoryListLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Pair<Option<Throwable>, List<DisplayableItem>>> repositoryListLiveData
+            = new MutableLiveData<>();
 
     private EndlessListDomainLogic<Movie> viewModel;
 
@@ -57,12 +60,19 @@ public class LifeCycleMovieViewModel extends ViewModel {
     }
 
     @NonNull
-    LiveData<List<DisplayableItem>> getRepositoryListLiveData() {
+    LiveData<Pair<Option<Throwable>, List<DisplayableItem>>> getRepositoryListLiveData() {
         return repositoryListLiveData;
     }
 
     public Callable getCallableFetch() {
-        return viewModel.getCallableFetch();
+        return () -> {
+            viewModel.fetch();
+            return "fetched";
+        };
+    }
+
+    public void fetch() {
+        viewModel.fetch();
     }
 
     public static class LifeCycleMovieViewModelFactory implements ViewModelProvider.Factory {
