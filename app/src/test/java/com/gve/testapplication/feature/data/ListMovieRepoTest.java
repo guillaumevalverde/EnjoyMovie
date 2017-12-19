@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
 import com.gve.testapplication.feature.Movie;
+import com.gve.testapplication.feature.movieslist.data.ListMovieRepo;
 import com.gve.testapplication.test_common.BaseTest;
 
 import org.junit.Before;

@@ -13,7 +13,7 @@ import com.gve.testapplication.core.utils.PicassoUtils;
 import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.MovieDetail;
 import com.gve.testapplication.feature.Utils;
-import com.gve.testapplication.feature.data.MovieDetailRepo;
+import com.gve.testapplication.feature.moviedetail.data.MovieDetailRepo;
 import com.squareup.picasso.Picasso;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

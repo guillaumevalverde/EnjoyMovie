@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.gve.testapplication.feature.Movie;
-import com.gve.testapplication.feature.data.MovieDetailRepo;
+import com.gve.testapplication.feature.moviedetail.data.MovieDetailRepo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,13 +21,13 @@ import java.util.List;
 public class InfiniteViewPagerAdapter extends PagerAdapter {
 
     private static final String TAG = InfiniteViewPagerAdapter.class.getSimpleName();
-    Context mContext;
+    private Context context;
     private List<Movie> resources = new ArrayList<>();
     private MovieDetailRepo repo;
     private Picasso picasso;
 
     public InfiniteViewPagerAdapter(Context context, List<Movie> movies, MovieDetailRepo repo, Picasso picasso) {
-        mContext = context;
+        this.context = context;
         this.resources.addAll(movies);
         this.repo = repo;
         this.picasso = picasso;
@@ -101,7 +101,7 @@ public class InfiniteViewPagerAdapter extends PagerAdapter {
 
     private View createView(ViewGroup container, int position) {
         Log.d(TAG, "createView : " + position + ", movie: " + resources.get(position).toString());
-        CustomMovieDetailView view = new CustomMovieDetailView(mContext, picasso, resources.get(position), repo);
+        CustomMovieDetailView view = new CustomMovieDetailView(context, picasso, resources.get(position), repo);
         container.addView(view);
         return view;
     }

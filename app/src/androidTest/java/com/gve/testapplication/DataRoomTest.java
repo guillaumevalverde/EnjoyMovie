@@ -13,7 +13,7 @@ import com.gve.testapplication.core.data.AppDataBase;
 import com.gve.testapplication.core.data.roomjsonstore.RoomJson;
 import com.gve.testapplication.core.data.roomjsonstore.RoomJsonStore;
 import com.gve.testapplication.feature.Movie;
-import com.gve.testapplication.feature.data.ListMovieRepo;
+import com.gve.testapplication.feature.movieslist.data.ListMovieRepo;
 import com.gve.testapplication.test_common.MovieUtil;
 
 import org.junit.After;
@@ -26,7 +26,7 @@ import java.util.List;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.subscribers.TestSubscriber;
 
-import static com.gve.testapplication.feature.data.ListMovieRepo.getKeyFromNumPage;
+import static com.gve.testapplication.feature.movieslist.data.ListMovieRepo.getKeyFromNumPage;
 
 @RunWith(AndroidJUnit4.class)
 public class DataRoomTest {

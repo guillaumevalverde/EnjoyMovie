@@ -1,4 +1,4 @@
-package com.gve.testapplication.feature.data;
+package com.gve.testapplication.feature.movieslist.data;
 
 import android.arch.persistence.room.EmptyResultSetException;
 import android.support.annotation.NonNull;
@@ -9,6 +9,8 @@ import com.gve.testapplication.core.data.ReactiveStoreSingular;
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.RepoInfiniteScrolling;
 import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.MoviesPage;
+import com.gve.testapplication.feature.data.MapperMovie;
+import com.gve.testapplication.feature.data.MovieApiService;
 
 import java.util.ArrayList;
 import java.util.Date;
