@@ -1,6 +1,5 @@
 package com.gve.testapplication.feature.data;
 
-import android.accounts.NetworkErrorException;
 import android.arch.persistence.room.EmptyResultSetException;
 import android.support.v4.util.Pair;
 
@@ -16,14 +15,17 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
-import io.reactivex.subscribers.TestSubscriber;
 
+import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -46,13 +48,16 @@ public class ListMovieRepoTest extends BaseTest {
         gson = builder.create();
     }
 
-    public static Single<Pair<Long, List<Movie>>> NonEmptySingle(Gson gson) throws Exception {
-        return Single.just(new Pair(0, MovieUtil.getMoviesSingle(gson).blockingGet()));
+    public static Single<Pair<Long, List<Movie>>> getNonEmptySingle(Gson gson) throws Exception {
+        return Single.just(new Pair(new Date().getTime(), MovieUtil.getMoviesSingle(gson).blockingGet()));
+    }
+
+    public static Single<Pair<Long, List<Movie>>> getNonEmptyDeprecatedSingle(Gson gson) throws Exception {
+        return Single.just(new Pair(0L, MovieUtil.getMoviesSingle(gson).blockingGet()));
     }
 
     public static Single<Pair<Long, List<Movie>>> emptySingle =
             Single.just(new Pair(0, new ArrayList<Movie>()));
-
 
     @Test
     public void WithEmptyStoreFetchTest() {
@@ -67,6 +72,24 @@ public class ListMovieRepoTest extends BaseTest {
         testObserver.assertComplete();
         testObserver.assertNoErrors();
         testObserver.assertValueAt(0, repositories -> repositories.size() == 20);
+        verify(fetcher,  times(1)).getWithPaging(Mockito.anyString(),Mockito.anyInt());
+    }
+
+
+    @Test
+    public void storeWithDataDeprecatedFetchTest() throws Exception {
+        ListMovieRepo repo = new ListMovieRepo(fetcher, store, "apiKey");
+        when(fetcher.getWithPaging(Mockito.anyString(),Mockito.anyInt()))
+                .thenReturn(Observable.just(MovieUtil.getMoviesInPage(gson)).delay(1000, TimeUnit.MILLISECONDS).singleOrError());
+
+        when(store.getSingularSingle(Mockito.anyString()))
+                .thenReturn(getNonEmptyDeprecatedSingle(gson));
+
+        TestObserver<List<Movie>> testObserver = repo.get(0L).test();
+        testObserver.assertComplete();
+        testObserver.assertNoErrors();
+        testObserver.assertValueAt(0, repositories -> repositories.size() == 20);
+        verify(fetcher,  times(1)).getWithPaging(Mockito.anyString(),Mockito.anyInt());
     }
 
     @Test
@@ -77,7 +100,7 @@ public class ListMovieRepoTest extends BaseTest {
                 .thenReturn(Single.just(MovieUtil.getMoviesInPage(gson)));
 
         when(store.getSingularSingle(Mockito.anyString()))
-                .thenReturn(NonEmptySingle(gson));
+                .thenReturn(getNonEmptySingle(gson));
 
         TestObserver<List<Movie>> testObserver = repo.get(0).test();
         testObserver.assertComplete();
@@ -98,6 +121,10 @@ public class ListMovieRepoTest extends BaseTest {
         TestObserver<List<Movie>> testObserver = repo.get(0).test();
         testObserver.assertError(throwable -> throwable.getMessage().contentEquals("network"));
 
+    }
+
+    @Test public void isDataDeprecated() {
+        assertTrue(ListMovieRepo.isDataDeprecated(0L));
     }
 
 }

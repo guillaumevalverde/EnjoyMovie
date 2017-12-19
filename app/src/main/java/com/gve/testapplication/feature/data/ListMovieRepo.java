@@ -11,7 +11,9 @@ import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.MoviesPage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,6 +33,7 @@ public class ListMovieRepo implements RepoInfiniteScrolling<Movie> {
     private static final String REPO_MOVIE = "movie";
     private MovieApiService fetcher;
     private ReactiveStoreSingular<List<Movie>> reactiveStore;
+    private static final long TIME_AMOUNT_VALIDATE = 1 * 60 * 60 * 1000;
 
     private String apiKey;
 
@@ -61,13 +64,14 @@ public class ListMovieRepo implements RepoInfiniteScrolling<Movie> {
     public Single<List<Movie>> get(long key) {
         Single<List<Movie>> storeSingle =
                 reactiveStore.<Long, List<Movie>>getSingularSingle(getKeyFromNumPage(key))
+                        .filter(stateList -> !isDataDeprecated(stateList.first))
+                        .toSingle()
                         .onErrorResumeNext(error ->
                         {
-                            if (error instanceof EmptyResultSetException) {
+                            if (error instanceof EmptyResultSetException || error instanceof NoSuchElementException) {
                                 return Single.just(new Pair<Long, List<Movie>>(0L, new ArrayList<Movie>()));
                             }
                             return Single.error(error);
-
                         })
                         .map(p -> p.second);
 
@@ -77,4 +81,7 @@ public class ListMovieRepo implements RepoInfiniteScrolling<Movie> {
                 .subscribeOn(Schedulers.io());
     }
 
+    public static boolean isDataDeprecated(long time) {
+        return ((new Date()).getTime() - time) > TIME_AMOUNT_VALIDATE;
+    }
 }
