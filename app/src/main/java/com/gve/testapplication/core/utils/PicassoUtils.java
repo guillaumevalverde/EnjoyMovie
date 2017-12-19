@@ -25,13 +25,11 @@ public class PicassoUtils {
 
 
     public static void showImageWithPicasso(Picasso picasso, ImageView imageIV, String url) {
-        showImageWithPicasso(picasso, imageIV, url, null, null);
+        showImageWithPicasso(picasso, imageIV, url, null);
     }
 
     public static void showImageWithPicasso(Picasso picasso, ImageView imageIV, String url,
-                                            Callback callback, NetworkPolicy policy) {
-
-
+                                            Callback callback) {
         if (!url.isEmpty()) {
             if (callback == null) {
                 getRequest(picasso, url)
@@ -48,6 +46,7 @@ public class PicassoUtils {
 
     private static RequestCreator getRequest(Picasso picasso, String url) {
         return picasso.load(url)
+                .fit()
                 .transform(TRANSFORMATION)
                 .placeholder(R.drawable.rounded)
                 .error(R.drawable.rounded);
