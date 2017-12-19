@@ -1,5 +1,6 @@
 package com.gve.testapplication.core.data.roomjsonstore
 
+import android.arch.persistence.room.EmptyResultSetException
 import android.support.v4.util.Pair
 import com.gve.testapplication.core.data.AppDataBase
 import com.gve.testapplication.core.data.ReactiveStoreSingular
@@ -44,7 +45,6 @@ constructor(private val roomJsonModel: RoomJsonModelDao,
 
     override fun getSingularSingle(key: String): Single<Pair<Long, Value>> {
         return roomJsonModel.getItembyIdSingle(key)
-                .onErrorReturn { _ -> RoomJson.getEmptyRoom(getEmptyValue) }
                 .map { roomJson -> Pair(roomJson.timeStamp, getObjFromJson.apply(roomJson.json)) }
     }
 

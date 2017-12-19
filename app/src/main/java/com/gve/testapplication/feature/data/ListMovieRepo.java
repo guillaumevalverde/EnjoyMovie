@@ -1,6 +1,8 @@
 package com.gve.testapplication.feature.data;
 
+import android.arch.persistence.room.EmptyResultSetException;
 import android.support.annotation.NonNull;
+import android.support.v4.util.Pair;
 
 import com.gve.testapplication.core.data.ReactiveStoreSingular;
 import com.gve.testapplication.core.presentation.recyclerview.endlesslistscroll.RepoInfiniteScrolling;
@@ -58,6 +60,14 @@ public class ListMovieRepo implements RepoInfiniteScrolling<Movie> {
     public Single<List<Movie>> get(long key) {
         Single<List<Movie>> storeSingle =
                 reactiveStore.<Long, List<Movie>>getSingularSingle(getKeyFromNumPage(key))
+                        .onErrorResumeNext(error ->
+                        {
+                            if (error instanceof EmptyResultSetException) {
+                                return Single.just(new Pair<Long, List<Movie>>(0L, new ArrayList<Movie>()));
+                            }
+                            return Single.error(error);
+
+                        })
                         .map(p -> p.second);
 
         return Single.concat(storeSingle, fetch(key))
