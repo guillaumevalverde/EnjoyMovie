@@ -1,6 +1,7 @@
 package com.gve.testapplication.core.injection.module;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.gve.testapplication.BuildConfig;
@@ -13,6 +14,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Set;
@@ -68,7 +70,6 @@ public final class NetworkModule {
                                                        networkInterceptor) {
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
         okBuilder.networkInterceptors().addAll(networkInterceptor);
-
         return okBuilder.build();
     }
 
@@ -81,8 +82,16 @@ public final class NetworkModule {
     @Provides
     @Singleton
     Picasso providePicasso(@ForApplication Context context, OkHttpClient okHttpClient) {
+        File baseDir = context.getCacheDir();
+        OkHttp3Downloader downloader;
+        if (baseDir != null) {
+            File cacheDir = new File(baseDir, "HttpResponseCache");
+            downloader = new OkHttp3Downloader(cacheDir, 10 * 1024 * 1024);
+        } else {
+            downloader = new OkHttp3Downloader(okHttpClient);
+        }
         Picasso picasso = new Picasso.Builder(context)
-                .downloader(new OkHttp3Downloader(okHttpClient))
+                .downloader(downloader)
                 .indicatorsEnabled(BuildConfig.DEBUG)
                 .loggingEnabled(BuildConfig.DEBUG)
                 .listener((picasso1, uri, exception) -> exception.printStackTrace())
