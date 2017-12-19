@@ -69,6 +69,16 @@
                 tools:text="vote: " />
 
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/movie_detail_progress_bar"
+            android:layout_below="@+id/movie_detail_transition_image"
+            android:layout_centerHorizontal="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="100dp"
+            android:visibility="visible"
+            tools:visibility="visible"/>
     </RelativeLayout>
 
     <com.gve.testapplication.core.presentation.InfiniteViewPager

@@ -9,6 +9,7 @@ import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -57,10 +58,10 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
     Picasso picasso;
 
     private InfiniteViewPager pager;
+    private ProgressBar progressBar;
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    private Handler handler = new Handler();
     private PublishSubject<Boolean> isTransitionDone = PublishSubject.create();
 
     public static Movie getMovieFromIntent(Intent intent) {
@@ -90,6 +91,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
         TextView targetTV = findViewById(R.id.movie_detail_transition_title);
         TextView movieVoteTv = findViewById(R.id.movie_detail_transition_vote);
         RelativeLayout transitionRL = findViewById(R.id.movie_detail_transition_rl);
+        progressBar = findViewById(R.id.movie_detail_progress_bar);
         targetTV.setText(movieRef.getName());
         movieVoteTv.setText(movieVoteTv.getResources()
                 .getString(R.string.movie_vote, movieRef.getVote()));
@@ -111,6 +113,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
                                     pager.setAdapter(pagerAdapter);
                                     pager.setVisibility(View.VISIBLE);
                                     transitionRL.setVisibility(View.INVISIBLE);
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 }, error -> Log.e(TAG, "error: " + error.getMessage())));
       getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
             @Override
