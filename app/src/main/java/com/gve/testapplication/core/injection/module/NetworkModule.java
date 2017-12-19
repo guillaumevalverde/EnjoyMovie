@@ -8,7 +8,9 @@ import com.gve.testapplication.InstrumentationModule;
 import com.gve.testapplication.core.AppConstUtils;
 import com.gve.testapplication.core.injection.qualifiers.ForApplication;
 import com.gve.testapplication.feature.data.MovieApiService;
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 import java.lang.annotation.Retention;
@@ -78,8 +80,9 @@ public final class NetworkModule {
 
     @Provides
     @Singleton
-    Picasso providePicasso(@ForApplication Context context) {
+    Picasso providePicasso(@ForApplication Context context, OkHttpClient okHttpClient) {
         Picasso picasso = new Picasso.Builder(context)
+                .downloader(new OkHttp3Downloader(okHttpClient))
                 .indicatorsEnabled(BuildConfig.DEBUG)
                 .loggingEnabled(BuildConfig.DEBUG)
                 .listener((picasso1, uri, exception) -> exception.printStackTrace())

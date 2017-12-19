@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import com.gve.testapplication.R;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
@@ -24,11 +25,13 @@ public class PicassoUtils {
 
 
     public static void showImageWithPicasso(Picasso picasso, ImageView imageIV, String url) {
-        showImageWithPicasso(picasso, imageIV, url, null);
+        showImageWithPicasso(picasso, imageIV, url, null, null);
     }
 
     public static void showImageWithPicasso(Picasso picasso, ImageView imageIV, String url,
-                                            Callback callback) {
+                                            Callback callback, NetworkPolicy policy) {
+
+
         if (!url.isEmpty()) {
             if (callback == null) {
                 getRequest(picasso, url)
@@ -47,8 +50,6 @@ public class PicassoUtils {
         return picasso.load(url)
                 .transform(TRANSFORMATION)
                 .placeholder(R.drawable.rounded)
-                .fit()
-                .centerInside()
                 .error(R.drawable.rounded);
     }
 

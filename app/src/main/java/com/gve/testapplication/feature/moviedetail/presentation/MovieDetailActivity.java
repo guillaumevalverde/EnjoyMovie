@@ -8,9 +8,8 @@ import android.support.annotation.Nullable;
 import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gve.testapplication.R;
@@ -23,16 +22,17 @@ import com.gve.testapplication.feature.data.MovieDetailPagerRepo;
 import com.gve.testapplication.feature.data.MovieDetailRepo;
 import com.gve.testapplication.feature.moviedetail.presentation.injection.MovieDetailActivityComponent;
 import com.gve.testapplication.feature.moviedetail.presentation.injection.MovieDetailActivityModule;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
 
 
 /**
@@ -41,6 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivityComponent> {
     public static final String TAG = MovieDetailActivity.class.getSimpleName();
+    public static final String TRANSITION = "TRANSITION_DONE";
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String URL = "url";
@@ -60,6 +61,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
     private CompositeDisposable disposable = new CompositeDisposable();
 
     private Handler handler = new Handler();
+    private PublishSubject<Boolean> isTransitionDone = PublishSubject.create();
 
     public static Movie getMovieFromIntent(Intent intent) {
         return new Movie(intent.getLongExtra(ID, -1),
@@ -86,99 +88,64 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
 
         ImageView target = findViewById(R.id.movie_detail_transition_image);
         TextView targetTV = findViewById(R.id.movie_detail_transition_title);
-        LinearLayout starLL = findViewById(R.id.movie_detail_transition_ll);
+        TextView movieVoteTv = findViewById(R.id.movie_detail_transition_vote);
+        RelativeLayout transitionRL = findViewById(R.id.movie_detail_transition_rl);
         targetTV.setText(movieRef.getName());
-        supportPostponeEnterTransition();
+        movieVoteTv.setText(movieVoteTv.getResources()
+                .getString(R.string.movie_vote, movieRef.getVote()));
 
-        PicassoUtils.showImageWithPicasso(picasso, target, movieRef.getUrl(), new Callback() {
-            @Override
-            public void onSuccess() {
-                scheduleStartPostponedTransition(target);
-            }
-
-            @Override
-            public void onError() {
-            }
-        });
-
+        PicassoUtils.showImageWithPicasso(picasso, target, movieRef.getUrl());
 
         final InfiniteViewPagerAdapter pagerAdapter =
                 new InfiniteViewPagerAdapter(getBaseContext(), new ArrayList<>(), repo, picasso);
 
-        disposable.add(factoryPagerViewModel.getViewModel(movieRef).getMovieWithSimilar()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                movies -> {
-                    pagerAdapter.addRessourceWithouNotify(movies);
-                    pager.setAdapter(pagerAdapter);
-                }, error -> Log.e(TAG, "error: " + error.getMessage())));
-
-
-        getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+        disposable.add(
+                Single.zip(factoryPagerViewModel.getViewModel(movieRef).getMovieWithSimilar()
+                                .doOnSuccess(pagerAdapter::addRessourceWithouNotify),
+                        isTransitionDone.single(true), (a, b) -> a)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                movies -> {
+                                    Log.v(TAG, "set up adapter");
+                                    pager.setAdapter(pagerAdapter);
+                                    pager.setVisibility(View.VISIBLE);
+                                    transitionRL.setVisibility(View.INVISIBLE);
+                                }, error -> Log.e(TAG, "error: " + error.getMessage())));
+      getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
             @Override
-            public void onTransitionStart(Transition transition) {
-                Log.d(TAG, "onTransitionStart");
-                handler.post(() -> {
-                    target.setVisibility(View.VISIBLE);
-                    targetTV.setVisibility(View.VISIBLE);
-                    starLL.setVisibility(View.VISIBLE);
-                });
-            }
+            public void onTransitionStart(Transition transition) { }
 
             @Override
             public void onTransitionEnd(Transition transition) {
                 Log.d(TAG, "onTransitionEnd");
-                handler.post(() -> {
-                    target.setVisibility(View.INVISIBLE);
-                    targetTV.setVisibility(View.INVISIBLE);
-                    starLL.setVisibility(View.INVISIBLE);
-                });
+                isTransitionDone.onNext(true);
+                isTransitionDone.onComplete();
             }
 
             @Override
-            public void onTransitionCancel(Transition transition) {
-                Log.d(TAG, "onTransitionCancel");
-                handler.post(() -> {
-                    target.setVisibility(View.INVISIBLE);
-                    targetTV.setVisibility(View.INVISIBLE);
-                    starLL.setVisibility(View.INVISIBLE);
-                });
-            }
+            public void onTransitionCancel(Transition transition) { }
 
             @Override
-            public void onTransitionPause(Transition transition) {
-
-            }
+            public void onTransitionPause(Transition transition) { }
 
             @Override
             public void onTransitionResume(Transition transition) {
-                Log.v(TAG, "onTransitionResume");
-                handler.post(() -> {
-                    target.setVisibility(View.VISIBLE);
-                    targetTV.setVisibility(View.VISIBLE);
-                    starLL.setVisibility(View.VISIBLE);
-                });
+                Log.d(TAG, "onTransitionResume");
+
             }
         });
-    }
 
-    private void scheduleStartPostponedTransition(final View sharedElement) {
-        sharedElement.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
-                        startPostponedEnterTransition();
-                        return true;
-                    }
-                });
+        // recovering the instance state
+        if (savedInstanceState != null && savedInstanceState.getBoolean(TRANSITION)) {
+            isTransitionDone.onNext(true);
+            isTransitionDone.onComplete();
+        }
     }
-
     @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(TRANSITION, true);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -186,7 +153,7 @@ public class MovieDetailActivity extends BaseInjectingActivity<MovieDetailActivi
         movieDetailActivityComponent.inject(this);
     }
 
-    @NonNull
+      @NonNull
     @Override
     protected MovieDetailActivityComponent createComponent() {
         MovieDetailActivityComponent.Builder builder = (MovieDetailActivityComponent.Builder)

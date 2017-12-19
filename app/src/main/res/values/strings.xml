@@ -2,6 +2,6 @@
     <string name="app_name">EnjoyMovie</string>
 
     <!--Movie related -->
-    <string name="movie_vote">vote: %1$s</string>
+    <string name="movie_vote">vote: %.1f</string>
 
 </resources>
