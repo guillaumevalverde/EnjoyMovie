@@ -12,6 +12,7 @@ import com.gve.testapplication.R;
 import com.gve.testapplication.core.utils.PicassoUtils;
 import com.gve.testapplication.feature.Movie;
 import com.gve.testapplication.feature.MovieDetail;
+import com.gve.testapplication.feature.Utils;
 import com.gve.testapplication.feature.data.MovieDetailRepo;
 import com.squareup.picasso.Picasso;
 
@@ -27,10 +28,11 @@ public class CustomMovieDetailView extends RelativeLayout {
 
     private static final String TAG = CustomMovieDetailView.class.getSimpleName();
     private MovieDetailRepo repo;
-    private ImageView movieIV;
-    private TextView movieTitleTV;
-    private TextView movieVoteTV;
     private TextView movieOverViewTV;
+    private TextView movieBudgetTV;
+    private TextView movieRevenueTV;
+    private TextView movieReleaseDateTV;
+    private TextView movieOriginalLanguageTV;
     private Movie movieRef;
     private CompositeDisposable disposable = new CompositeDisposable();
     private Picasso picasso;
@@ -43,16 +45,24 @@ public class CustomMovieDetailView extends RelativeLayout {
         init(context);
     }
 
+    public CustomMovieDetailView(Context context) {
+        super(context);
+    }
+
     private void init(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.movie_detail,
                 this, true);
         LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
         setLayoutParams(layoutParams);
-        movieIV = view.findViewById(R.id.movie_detail_image);
-        movieTitleTV = view.findViewById(R.id.movie_detail_title);
+        ImageView movieIV = view.findViewById(R.id.movie_detail_image);
+        TextView movieTitleTV = view.findViewById(R.id.movie_detail_title);
         movieOverViewTV = view.findViewById(R.id.movie_detail_overview);
-        movieVoteTV = view.findViewById(R.id.movie_detail_vote);
+        movieBudgetTV = view.findViewById(R.id.movie_detail_budget);
+        movieRevenueTV = view.findViewById(R.id.movie_detail_revenue);
+        movieReleaseDateTV = view.findViewById(R.id.movie_detail_release_date);
+        movieOriginalLanguageTV = view.findViewById(R.id.movie_detail_original_language);
+        TextView movieVoteTV = view.findViewById(R.id.movie_detail_vote);
         movieTitleTV.setText(movieRef.getName());
         movieVoteTV.setText(movieVoteTV.getResources()
                 .getString(R.string.movie_vote, movieRef.getVote()));
@@ -67,12 +77,16 @@ public class CustomMovieDetailView extends RelativeLayout {
 
     }
 
-    public CustomMovieDetailView(Context context) {
-        super(context);
-    }
-
     private void updateDetail(MovieDetail moviedetail) {
         movieOverViewTV.setText(moviedetail.getOverview());
+        movieBudgetTV.setText(movieBudgetTV.getResources()
+                .getString(R.string.movie_detail_budget, Utils.getNumberInCurrency(moviedetail.getBudget())));
+        movieRevenueTV.setText(movieBudgetTV.getResources()
+                .getString(R.string.movie_detail_revenue, Utils.getNumberInCurrency(moviedetail.getRevenue())));
+        movieReleaseDateTV.setText(movieBudgetTV.getResources()
+                .getString(R.string.movie_detail_release_date, Utils.getDate(moviedetail.getRelease_date())));
+        movieOriginalLanguageTV.setText(movieBudgetTV.getResources()
+                .getString(R.string.movie_detail_original_language, moviedetail.getOriginal_language()));
     }
 
     @Override

@@ -3,5 +3,9 @@
 
     <!--Movie related -->
     <string name="movie_vote">vote: %.1f</string>
+    <string name="movie_detail_budget">budget: %s</string>
+    <string name="movie_detail_original_language">language: %s</string>
+    <string name="movie_detail_release_date">release date: %s</string>
+    <string name="movie_detail_revenue">revenue: %s</string>
 
 </resources>
